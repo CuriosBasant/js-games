@@ -1,0 +1,122 @@
+.corner:nth-child(1) {
+  transform: translate3d(50%, 50%, var(--cubie-size));
+}
+.corner:nth-child(2) {
+  transform: translate3d(50%, 50%, calc(var(--cubie-size) * -1));
+}
+.corner:nth-child(3) {
+  transform: translate3d(-150%, 50%, calc(var(--cubie-size) * -1));
+}
+.corner:nth-child(4) {
+  transform: translate3d(-150%, 50%, var(--cubie-size));
+}
+.corner:nth-child(5) {
+  transform: translate3d(50%, -150%, var(--cubie-size));
+}
+.corner:nth-child(6) {
+  transform: translate3d(50%, -150%, calc(var(--cubie-size) * -1));
+}
+.corner:nth-child(7) {
+  transform: translate3d(-150%, -150%, calc(var(--cubie-size) * -1));
+}
+.corner:nth-child(8) {
+  transform: translate3d(-150%, -150%, var(--cubie-size));
+}calc(var(--cubie-size) / -1)
+
+
+<div class="cubie corner">
+            <span class="cubie-face face-side-2"></span>
+            <span class="cubie-face face-side-3"></span>
+            <span class="cubie-face face-side-1"></span>
+          </div>
+          <div class="cubie corner">
+            <span class="cubie-face face-side-2"></span>
+            <span class="cubie-face face-side-3"></span>
+            <span class="cubie-face face-side-6"></span>
+          </div>
+          <div class="cubie corner">
+            <span class="cubie-face face-side-5"></span>
+            <span class="cubie-face face-side-3"></span>
+            <span class="cubie-face face-side-6"></span>
+          </div>
+          <div class="cubie corner">
+            <span class="cubie-face face-side-5"></span>
+            <span class="cubie-face face-side-3"></span>
+            <span class="cubie-face face-side-1"></span>
+          </div>
+          <div class="cubie corner">
+            <span class="cubie-face face-side-2"></span>
+            <span class="cubie-face face-side-4"></span>
+            <span class="cubie-face face-side-1"></span>
+          </div>
+          <div class="cubie corner">
+            <span class="cubie-face face-side-2"></span>
+            <span class="cubie-face face-side-4"></span>
+            <span class="cubie-face face-side-6"></span>
+          </div>
+          <div class="cubie corner">
+            <span class="cubie-face face-side-5"></span>
+            <span class="cubie-face face-side-4"></span>
+            <span class="cubie-face face-side-6"></span>
+          </div>
+          <div class="cubie corner">
+            <span class="cubie-face face-side-5"></span>
+            <span class="cubie-face face-side-4"></span>
+            <span class="cubie-face face-side-1"></span>
+          </div>
+
+          <div class="cubie side">
+            <span class="cubie-face face-side-2"></span>
+            <span class="cubie-face face-side-3"></span>
+          </div>
+          <div class="cubie side">
+            <span class="cubie-face face-side-3"></span>
+            <span class="cubie-face face-side-6"></span>
+          </div>
+          <div class="cubie side">
+            <span class="cubie-face face-side-5"></span>
+            <span class="cubie-face face-side-3"></span>
+          </div>
+          <div class="cubie side">
+            <span class="cubie-face face-side-3"></span>
+            <span class="cubie-face face-side-1"></span>
+          </div>
+          <div class="cubie side">
+            <span class="cubie-face face-side-2"></span>
+            <span class="cubie-face face-side-4"></span>
+          </div>
+          <div class="cubie side">
+            <span class="cubie-face face-side-4"></span>
+            <span class="cubie-face face-side-6"></span>
+          </div>
+          <div class="cubie side">
+            <span class="cubie-face face-side-5"></span>
+            <span class="cubie-face face-side-4"></span>
+          </div>
+          <div class="cubie side">
+            <span class="cubie-face face-side-4"></span>
+            <span class="cubie-face face-side-1"></span>
+          </div>
+          <div class="cubie side">
+            <span class="cubie-face face-side-2"></span>
+            <span class="cubie-face face-side-1"></span>
+          </div>
+          <div class="cubie side">
+            <span class="cubie-face face-side-2"></span>
+            <span class="cubie-face face-side-6"></span>
+          </div>
+          <div class="cubie side">
+            <span class="cubie-face face-side-5"></span>
+            <span class="cubie-face face-side-1"></span>
+          </div>
+          <div class="cubie side">
+            <span class="cubie-face face-side-5"></span>
+            <span class="cubie-face face-side-1"></span>
+          </div>
+
+          <div class="cubie center"><span class="cubie-face face-side-2"></span></div>
+          <div class="cubie center"><span class="cubie-face face-side-3"></span></div>
+          <div class="cubie center"><span class="cubie-face face-side-1"></span></div>
+          <div class="cubie center"><span class="cubie-face face-side-5"></span></div>
+          <div class="cubie center"><span class="cubie-face face-side-4"></span></div>
+          <div class="cubie center"><span class="cubie-face face-side-6"></span></div>

@@ -1,0 +1,15 @@
+{
+  "name": "chess_game_nodejs",
+  "version": "1.0.0",
+  "description": "Just Testing Out",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server",
+    "dev": "nodemon server --ignore 'public/'"
+  },
+  "author": "basant",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

@@ -1,0 +1,30 @@
+html {
+  font-size: 62.5%;
+  --snake-color: orange;
+}
+body {
+  background-color: gray;
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  width: 45rem;
+  margin: auto;
+}
+h1 {
+  text-align: center;
+}
+#game-panel {
+  display: grid;
+  margin: auto;
+  grid-template-columns: repeat(10, 1fr);
+  background: #223;
+}
+
+#game-panel span {
+  box-sizing: border-box;
+  padding-top: 100%;
+  border-radius: 50%;
+  /* box-shadow: inset 0 0 0 0.1rem grey; */
+}

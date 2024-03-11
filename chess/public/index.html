@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <title>Chess Game</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        background: url('./images/background/silver_piece.jpg') center;
+        background-size: cover;
+        font-family: Calibri, 'Trebuchet MS', sans-serif;
+      }
+      h1 {
+        text-align: center;
+        margin: 1em 0;
+        color: white;
+      }
+      form {
+        width: 420px;
+        padding: 2.5em;
+        margin-left: 10%;
+        border-radius: 0.5em;
+        background: #fff4;
+      }
+      form label {
+        display: block;
+        margin-top: 1em;
+        font-weight: bold;
+        font-size: 1.1em;
+        color: silver;
+      }
+      form label input,
+      form label select {
+        box-sizing: border-box;
+        padding: 0.7em 1.2em;
+        margin-top: 0.6em;
+        border-radius: 0.5em;
+        border: none;
+        border-bottom: 1px solid #666;
+        width: 100%;
+      }
+      form label input:focus,
+      form label select:focus {
+        outline: none;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        box-shadow: 0 0.15em 0.1em #f008;
+      }
+      /* form label select option[value=''], */
+      form label select:invalid {
+        color: #757575;
+        padding-left: 0.8em;
+      }
+      form label select,
+      form label select option {
+        color: #000;
+      }
+
+      .submit-btn {
+        text-align: right;
+        margin-top: 4em;
+      }
+      .submit-btn input {
+        all: unset;
+        color: white;
+        font-size: 1.2em;
+        padding: 0.5em 1.2em;
+        border-radius: 0.5em;
+        box-shadow: 0 0 0.5em #f005;
+        background: crimson;
+      }
+      .submit-btn input:hover {
+        box-shadow: 0 0 1.2em #f008;
+        text-shadow: 0 0 0.5em #fff9;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Curios Chess</h1>
+    <form action="./start_game.html" method="GET">
+      <p>Enter Player Names</p>
+      <label>
+        Player 1:
+        <input type="text" name="player1_name" placeholder="Enter Player 1 Name" />
+      </label>
+      <label>
+        Player 2:
+        <input type="text" name="player2_name" placeholder="Enter Player 2 Name" />
+      </label>
+      <label>
+        Game Variant:
+        <select name="variant" id="" required>
+          <option value selected disabled hidden>Choose Game Variant</option>
+          <option value="standard">Standard</option>
+          <option value="chess960">Chess 960</option>
+          <option value="transcendental">Transcendental</option>
+          <option value="horde">Horde</option>
+          <option value="custom">Custom Setup</option>
+        </select>
+      </label>
+      <div class="submit-btn">
+        <input type="submit" value="Start Game" />
+      </div>
+
+      <!-- <label for="hey">hey 1</label>
+      <label for="hey">hey 2</label>
+      <input type="checkbox" name="chek" id="hey" /> -->
+    </form>
+  </body>
+</html>

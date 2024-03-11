@@ -1,0 +1,16 @@
+#game-container {
+  /* height: 100vh; */
+  width: 50em;
+  margin: auto;
+}
+
+#board-history {
+  padding: 1.5rem;
+}
+
+.board-container {
+  width: 100%;
+}
+#board {
+  width: 100%;
+}

@@ -1,0 +1,90 @@
+html {
+  font-size: 62.5%;
+  --mark-width: 1.5rem;
+}
+body {
+  background-color: gray;
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  width: 50rem;
+  margin: auto;
+}
+h1 {
+  text-align: center;
+  margin: 3rem 0;
+}
+#game-panel {
+  display: grid;
+  position: relative;
+  border: 1rem solid white;
+  background: #334;
+  box-shadow: 0 0 2rem #0004;
+  border-radius: 5%;
+}
+#game-panel::before {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  width: var(--mark-width);
+  /* height: 90%; */
+  background-color: greenyellow;
+  z-index: 1;
+  top: calc(100% * 5 / 6);
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(90deg);
+  transition: 500ms height;
+}
+
+#game-panel span {
+  --mark-color: white;
+  cursor: pointer;
+  position: relative;
+  box-sizing: border-box;
+  padding-top: 100%;
+  border-radius: 10%;
+  box-shadow: inset 0 0 0 0.1rem white;
+}
+#game-panel span:hover {
+  /* background-color: #fff1; */
+}
+
+#game-panel span::before,
+#game-panel span::after {
+  opacity: 0;
+  transition: 1000ms opacity;
+}
+.nough #game-panel span.nought::before,
+#game-panel span.cross::before,
+#game-panel span.cross::after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 10rem;
+  opacity: 1;
+}
+#game-panel span.cross::before,
+#game-panel span.cross::after {
+  width: var(--mark-width);
+  background-color: var(--mark-color);
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+#game-panel span.cross::after {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+#game-panel span.nought::before {
+  width: 10rem;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: inset 0 0 0 var(--mark-width) var(--mark-color);
+}
+
+#game-panel span.fake-one::before,
+#game-panel span.fake-one::after {
+  opacity: 0.25;
+}

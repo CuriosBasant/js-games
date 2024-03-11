@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./images/curios_chess_icon.png" type="image/png" />
+    <link rel="stylesheet" href="./styles/main.css" />
+    <script type="module" src="./app.js" defer></script>
+    <title>Curios Chess Game</title>
+  </head>
+
+  <body>
+    <h1 id="game-heading">Curios Chess</h1>
+    <section id="game-container">
+      <div id="board-history">
+        <span>&ZeroWidthSpace;</span>
+      </div>
+
+      <div class="player">
+        <!-- [0, 1, 2, 3, 12, 13, 18, 1230, 1387, 1388, 1390] + &#128102;&#127995 -->
+        <span class="profile-pic">&#128103;&#127995;</span>
+        <div>
+          <span class="user-name">Player-2</span>
+          <div class="captured-pieces"></div>
+        </div>
+      </div>
+
+      <div class="board-container">
+        <div id="board">
+          <div id="squares"></div>
+          <div id="pieces"></div>
+        </div>
+      </div>
+
+      <div class="player">
+        <span class="profile-pic">&#128102;&#127995;</span>
+        <div>
+          <div class="captured-pieces"></div>
+          <span class="user-name">Player-1</span>
+        </div>
+      </div>
+
+      <nav id="buttons">
+        <!-- <div style="display: inline-block; width: auto;"></div> -->
+        <!-- <button class="using-icon" name="custom-setup">fiber_manual_record</button> -->
+        <button class="using-icon" name="navigator" value="-1">keyboard_arrow_left</button>
+        <button class="using-icon reset" name="reset-board">layers</button>
+        <button class="using-icon" name="navigator" value="1">keyboard_arrow_right</button>
+      </nav>
+      <div id="custom-setup-dialog" class="hide">
+        <h2>Custom Setup</h2>
+        <div id="pieces"></div>
+        <div style="flex: 1;"></div>
+        <div class="buttons">
+          <button class="using-icon close-btn">close</button>
+          <button class="using-icon confirm-btn">done</button>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
