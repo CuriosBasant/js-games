@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+	body { background: #fff; width: 100%; }
+	.circle, .circle:before, .circle:after {
+		position: absolute;
+		border-radius: 50%;
+		border: .3em solid;
+	}
+	.circle {
+		top: 20%; left: 20%;
+		height: 6em; width: 6em;
+		font-size: 4em;
+		border-color: #fff958 transparent #b858ff;
+		animation: spin 1.5s linear infinite;
+	}
+	.circle:before {
+		content: '';
+		top: .45em; left: .45em; bottom: .45em; right: .45em;
+		border-color: #e74c3c transparent #3ce7d8;
+		animation: spin 0.8s linear reverse infinite;
+	}
+	.circle:after {
+		content: '';
+		top: 1.2em; left: 1.2em; bottom: 1.2em; right: 1.2em;
+		border-color: #39558d transparent #ff67ad;
+		animation: spin 3.5s linear infinite;
+	}
+
+	@keyframes spin {
+			from{ transform: rotate(0deg) }
+			to{ transform: rotate(360deg) }
+		}
+</style>
+</head>
+<body>
+	<div class='circle'></div>
+</body>
+	<script>
+		var x = document.getElementsByTagName('div')[0];
+		x.style.backgroundColor = red;
+	</script>
+</html>

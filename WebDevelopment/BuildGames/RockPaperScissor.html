@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Rock Paper Scissor</title>
+	<style>
+		* { outline: none }
+		body {
+			/width: 500px;
+		}
+		#test {
+			font: bold 40px "Segoe UI";
+			text-align: center;
+		}
+		#buttons {
+			position: absolute;
+			bottom: 10px ; left: 0; right: 0;
+			margin: auto; width: 344px;
+		}
+		button {
+			padding: 0;
+			margin: 10px;
+			padding: 10px;
+			background: #00c0ff;
+			border-radius: 50%;
+			border: 6px double blue;
+			
+		}
+		img {
+			height: 60px;
+		}
+		#yourHand, #botsHand {
+			position: absolute;
+			top: 240px;
+			height: 220px;
+			/transform-origin: left ;
+			/animation: shake .7s linear infinite;
+		}
+		#botsHand {
+			right: 0;
+			transform: scaleX(-1);
+		}
+		
+		@keyframes shake {
+			0% { transform: rotate(0deg); }
+			50% { transform: rotate(20deg); }
+			100% { transform: rotate(0deg); }
+		}
+	</style>
+</head>
+<body>
+	<p id="test">Move</p> <br>
+	<div id="buttons">
+		<button class="hand"><img src="Rock.png"></button>
+		<button class="hand"><img src="Paper.png"></button>
+		<button class="hand"><img src="Scissor.png"></button>
+		
+	</div>
+	<img id="yourHand" src="Rock.png">
+	<img id="botsHand" src="Rock.png">	
+</body>
+<script>
+	let rps = ["Rock","Paper","Scissor"],
+		 hand = document.getElementById("buttons"),
+		 test = document.getElementById("test");
+	
+	let you = {
+		hand : 0, score : 0,
+		img : document.getElementById("yourHand")
+	}, bot = {
+		hand : 0, score : 0,
+		img : document.getElementById("botsHand")
+	};
+	
+	for (let i = 0; i < hand.children.length; i++) {
+		hand.children[i].onclick = () => {
+			you.hand = i; bot.hand = 3 * Math.random() | 0;
+			you.img.src = rps[you.hand] + ".png";
+			bot.img.src = rps[bot.hand] + ".png";
+			
+			check(you.hand - bot.hand);
+		}
+	}
+	function check(x) {
+		switch (x) {
+			case 0: 
+				you.score += 1;
+				bot.score += 1;
+				test.innerHTML = "Its Draw!"; 
+				break;
+			case -2: case 1:
+				you.score += 2;
+				test.innerHTML = "You Wins!"; 
+				break;
+			case -1: case 2:
+				bot.score += 2;
+				test.innerHTML = "Bot Wins!"; 
+				break;
+		}
+		test.innerHTML += `<br>${you.score} : ${bot.score}`;
+	}
+	
+	
+</script>
+</html>

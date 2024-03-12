@@ -1,0 +1,333 @@
+let clg = function() { console.log(...arguments); };
+let square = [];
+
+for ( let move of document.getElementsByName('navigate-move') )
+move.addEventListener( 'click', navigateMove );
+
+function preventDefault( ev ) {
+ev.preventDefault();
+}
+
+function onDragStart( ev ) {
+//	preventDefault(ev);
+ev.target.classList.add('sqr-active');
+setTimeout( () => {
+ev.target.classList.remove('sqr-active');
+}, 1 );
+
+clicked( ev.target );
+/*Piece.setIndex = ev.target;
+let index = Piece.index, sym = Piece.sym;
+
+if ( sym != ( Game.turn ? sym.toUpperCase() : sym.toLowerCase() ) || sym == '-' ) {
+return false;
+}
+
+ev.dataTransfer.setData('text', ev.target.textContent);
+showPath( index, sym.toUpperCase() );
+Piece.isSelected = true;
+
+Object.assign(Game.lastIndex, index);
+
+ev.target.textContent = '';*/
+
+}
+
+function onDragHover( ev ) {
+//	preventDefault( ev );
+/*if ( ev.target.classList.contains('path') ) {
+ev.target.style.fontSize = '2.5em';
+
+}*/
+
+//	ev.target.classList.toggle('on-drag-hover');
+}
+
+function onPieceDrop( ev ) {
+preventDefault( ev );
+
+clicked( ev.target );
+
+/*Piece.setIndex = ev.target;
+Piece.removePath();
+//	square[Game.lastIndex.r][Game.lastIndex.c].textContent = '';
+ev.target.textContent = ev.dataTransfer.getData('text');
+
+if ( !Piece.isSelected || Piece.index.r == Game.lastIndex.r && Piece.index.c == Game.lastIndex.c) {
+Piece.path = [];
+Piece.isSelected = false;
+return false;
+}
+
+clg('Piece Dropped');
+
+Board.updatePosition( Piece.index );
+
+Piece.isSelected = false;
+Game.turn = !Game.turn;*/
+}
+
+let Board = {
+position: ['rnbqkbnr','ppp--ppp','--------','--------','--------','--------','PPP--PPP', 'RNBQKBNR'],
+updatePosition: function ( p = '-' ) {
+this.position[Move.to.r] = this.position[Move.to.r].slice(0, Move.to.c) + Move.from.p + this.position[Move.to.r].slice(Move.to.c + 1);
+this.position[Move.from.r] = this.position[Move.from.r].slice(0, Move.from.c) + p + this.position[Move.from.r].slice(Move.from.c + 1);
+
+square[Move.to.r][Move.to.c].innerHTML = Piece.conv( Move.from.p );
+square[Move.from.r][Move.from.c].textContent = '';
+}
+},
+Move = {
+count: 0, side: true,
+from: { r: -1, c: -1, p: '' },
+to: { r: -1, c: -1, p: '' },
+index: thisSqr => {
+return {
+r: thisSqr.parentElement.rowIndex,
+c: thisSqr.cellIndex,
+get p() { return Board.position[this.r][this.c]; }
+};
+/*this.to.r = thisSqr.parentElement.rowIndex;
+this.to.c = thisSqr.cellIndex;
+this.to.p = Board.position[this.to.r][this.to.c];*/
+},
+navigate: function ( mv ) {
+[ Game.history.from[mv], Game.history.to[mv] ] = [ Game.history.to[mv], Game.history.from[mv] ];
+[ Game.history.from[mv].p, Game.history.to[mv].p ] = [ Game.history.to[mv].p, Game.history.from[mv].p ];
+this.from = { ...Game.history.from[mv] };
+this.to = { ...Game.history.to[mv] };
+//		[ this.from.p, this.to.p ] = [ this.to.p, this.from.p ];
+},
+highlight: function ( mv ) {
+//		[Move.to, Game.history.to[mv], Move.from, Game.history.from[mv)]
+//		[['from', 'to'].map(ft => ...Game.history.[ft].slice(mv, mv + 2))]
+[...Game.history.to.slice(mv, mv + 2), ...Game.history.from.slice(mv, mv + 2)]
+.forEach( dom => {
+if ( dom ) square[dom.r][dom.c].classList.toggle('highlight');
+});
+}
+},
+Game = {
+highlight: [{r: 1, c: 1}, {r: 1, c: 1}],
+last: [false, -1],
+history: {
+from: [], to: [], size: 0
+},
+saveToHistory: function () {
+this.history.from.push( { ...Move.from } );
+this.history.to.push( { ...Move.to } );
+this.history.size++;
+}
+},
+Piece = {
+isSelected: false, path: [],
+conv: p => ( p == '-' ? '' : `&#98${'KQRBNP'.indexOf(p.toUpperCase()) + 12 + (p == p.toLowerCase()) * 6};` ),
+removePath: function () {
+this.path.forEach( tup => {
+square[tup[0]][tup[1]].classList.remove('path');
+} );
+},
+isValid: P => P != '-' && P == ( Move.side ? P.toUpperCase() : P.toLowerCase() )
+
+};
+
+let highlightMove = (n = +!Piece.isSelected) => {
+square[Game.highlight[n].r][Game.highlight[n].c].classList = '';
+//		try {square[Move.from.r][Move.from.c].classList = '';} catch {}
+square[Move.to.r][Move.to.c].classList.add('highlight');
+Object.assign(Game.highlight[n], Move.to);
+};
+
+window.onload = () => {
+let board = document.getElementById('board');
+
+for (let i = 0, row; i < 8; i++) {
+row = board.insertRow(-1);
+for (let j = 0, sqr; j < 8; j++) {
+sqr = row.insertCell(-1);
+sqr.innerHTML =  Piece.conv( Board.position[i][j] );
+sqr.setAttribute( 'draggable', 'true' );
+sqr.addEventListener( 'click', clicked );
+sqr.addEventListener( 'dragstart', onDragStart );
+sqr.addEventListener( 'dragenter', preventDefault );
+sqr.addEventListener( 'dragover', preventDefault );
+sqr.addEventListener( 'dragleave', onDragHover );
+sqr.addEventListener( 'drop', onPieceDrop );
+}
+
+square.push( row.childNodes );
+}
+};
+
+function clicked ( _this ) {
+const toggleClass = ix => {
+square[ix.r][ix.c].classList.toggle('highlight');
+};
+let index = Move.index ( _this.tagName ? _this : this );
+//	clg(index, piece);
+
+Piece.removePath();
+if ( Piece.isValid( index.p ) ) {
+if ( Piece.isSelected && index.r == Move.from.r && index.c == Move.from.c ) {
+Piece.path = [];
+Piece.isSelected = false;
+}
+else {
+Piece.isSelected = true;
+//			highlightMove();
+toggleClass(index);
+if ( Move.count > 0 ) toggleClass(Move.from);
+calculatePath( { ...index } );
+
+Move.from = { ...index };
+}
+
+}
+else if ( Piece.isSelected ) {
+Piece.isSelected = false;
+toggleClass(index);
+if ( Move.count > 0 ) toggleClass(Move.to);
+
+makeMove();
+}
+}
+
+function makeMove() {
+if ( Move.count < Game.history.size ) {
+Game.history.from.splice( Move.count );
+Game.history.to.splice( Move.count );
+Game.history.size = Move.count;
+}
+
+Board.updatePosition();
+Game.saveToHistory();
+//	highlightMove();
+
+Move.side = !Move.side;
+Move.count++;
+}
+
+function navigateMove () {
+const navTo = +this.value;
+
+if ( navTo != Game.last[1] ) Game.last[0] = !Game.last[0];
+Move.count += navTo;
+const move = Move.count - +Game.last[0];
+
+if ( move < 0 || move > Game.history.size - 1 ) {
+Move.count -= navTo;
+console.warn('Move-Count Out of Range!');
+return;
+}
+Game.last[1] = navTo;
+
+Move.navigate( move );
+
+
+Board.updatePosition();
+Move.side = !Move.side;
+
+//	for ( v of [Move.from, Game.history.from[move - 1], Game.history.to[move - 1], Move.to].filter(o => o) )
+//		square[v.r][v.c].classList.toggle('highlight');
+Move.highlight( move - 1 );
+}
+
+function calculatePath ( index, showPath = true ) {
+Piece.path = findPath( index, showPath );
+
+}
+
+function findPath ( index, showPath ) {
+index.p = index.p.toUpperCase();
+
+const addClass = className => {
+if ( showPath )
+square[home[0]][home[1]].classList.add( className );
+};
+
+let home = [], path = [], direction = {
+P: [1 - Move.side * 2, 0],
+N: [[-2,1], [1,2], [2,1], [1,-2], [2,-1], [-1,-2], [-2,-1], [-1,2]],
+B: [[-1,-1], [-1,1], [1,1], [1,-1]],
+R: [[-1,0], [0,1], [1,0], [0,-1]],
+get Q() { return [...this.B, ...this.R]; },
+get K() { return this.Q; }
+} [index.p];
+
+if ( index.p == 'P' ) {
+home = [index.r + direction[0], index.c];
+while ( Board.position[home[0]][index.c] == '-' ) {
+addClass('path');
+path.push([...home]);
+
+if ( home[0] - direction[0] != Move.side * 5 + 1 ) break;
+home[0] += direction[0];
+}
+for ( cap of [-1, 1] ) {
+home = [index.r + direction[0], index.c + cap];
+if ( !home.every( h => h > -1 && h < 8 ) ) continue;
+let p = Board.position[home[0]][home[1]];
+if ( p == ( Move.side ? p.toLowerCase() : p.toUpperCase() ) && p != '-' ) {
+addClass( 'capture' );
+path.push(home);
+}
+}
+}
+else for ( dir of direction ) {
+home = [index.r + dir[0], index.c + dir[1]];
+while ( home.every( h => h > -1 && h < 8 ) ) {
+let p = Board.position[home[0]][home[1]];
+if ( p == ( Move.side ? p.toLowerCase() : p.toUpperCase() ) ) {
+addClass( p == '-' ? 'path' : 'capture' );
+path.push(home);
+if ( p != '-' || index.p == 'N' || index.p == 'K' ) break;
+}
+else break;
+
+//			if ( piece == 'N' || piece == 'K' ) break;
+home = [home[0] + dir[0], home[1] + dir[1]];
+}
+}
+
+return path;
+}
+
+function randomMove () {
+let legalMoves = [], obj = {r: 0, c: 0, p: ''};
+for ( const rank of Board.position ) {
+obj.c = 0;
+for ( const ch of rank ) {
+obj.p = ch;
+if ( Piece.isValid(ch) && findPath( {...obj}, false ).length > 0 ) {
+legalMoves.push({...obj});
+}
+obj.c++;
+}
+obj.r++;
+}
+Move.from = legalMoves[Math.random() * legalMoves.length | 0];
+square[Move.from.r][Move.from.c].classList.add('highlight');
+calculatePath( {...Move.from }, false );
+Move.to = Piece.path[Math.random() * Piece.path.length | 0];
+Move.to = { r: Move.to[0], c: Move.to[1], p: Board.position[Move.to[0]][Move.to[1]] };
+
+makeMove();
+}
+
+
+
+
+
+
+
+/*
+Hello Pratik Bhaiya, kya aap Rajiv Dixit Ji ke vichaaro ko sunte hai? Agar haa, to unke baare mei aapne apni kisi video mei kabhi jikra kyu nahi kiya?
+Maine Rajiv Dixit Ji ki Hamare Rashtra Gaan (Jana Gana Mana) ke upar ek video dekhi hai, jissme ve iss Gaan ka Bhahishkaar kar rahe hai (Aap wo video zaroor dekhe). Mai aapse uss video ke baare mei, aapke vichaar jaan-na chahta hu, kyunki mai uss video ko dekhkar bahot pareshaan hu ki mujhe hamare Raashtra Gaan ka samaan karna chahiye ya nahi? Kyunki ye to hamari gulaami ka prateek hai.
+Kripya iss par ek Video zaroor banaye!
+Mere hisaab se hamara Rashtra Gaan "Vande Matram" hona chahiye tha.
+
+Dosto aap sab bhi ek baar wo video zaroor dekhe -
+"Rajiv Dixit on Jana Gana Mana"
+*/
+
+

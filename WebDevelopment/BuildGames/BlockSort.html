@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Block Sort</title>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+			outline: none;
+		}
+		body {
+			display: flex;
+			background: #ffa;
+			font-family: 'Segoe UI';
+		}
+		#main-container {
+			position: relative;
+			left: 50%;
+			transform: translate(-50%, 50%);
+			font-size: 20px; }
+			#main-container > *:not(#puzzle) {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				color: white;
+				background: rgba(0,0,20,.8);}
+			#advance-level {
+				display: none;
+				font-size: .8em;
+				width: 15em;
+				padding: 2em;
+				border-radius: .5em;}
+		#advance-level > button {
+			display: block;
+			margin: 2em auto 0;
+			width: 3em;
+			height: 3em;
+			transform: rotate(-45deg); }
+			#advance-level > button:before {
+				content: 'NEXT';
+				/* font-size: 2.5em; */
+				font-weight: bold;
+				display: inline-block;
+				transform: rotate(45deg);
+			}
+			
+		#shuffle-btn {
+			/* font-size: 1em; */
+			height: 7em;
+			width: 7em;
+			border: 0;
+			margin-top: 1.8em;
+			border-radius: 50%;
+		}
+
+		#puzzle {
+			padding: .5em;
+			border-radius: .2em;
+			box-shadow: 0 0 1.4em rgba(0, 0, 15, 0.5);
+			background: rgba(255, 255, 255, 0.85) }
+			nav {
+				display: flex;
+				justify-content: space-between;
+				margin-bottom: 0.3em;
+				padding: .4em;
+				border-radius: .2em;
+				background: #445; }
+				#show-move {
+					padding: 0 .5em;
+					border-radius: .2em;
+					background: rgba(255, 255, 255, 0.85); }
+			#block-box {
+				padding: .2em;
+				box-shadow: inset 0 0 .8em #fa0;
+				margin: auto }
+				td:not(.invalid) {
+					color: white;
+					text-align: center;
+					font-size: 1.5em;
+					font-weight: bold;
+					padding: .1em;
+					height: 1.8em;
+					width: calc(1.8em - .8px);
+					text-shadow: 0 0 .1em #fb0;
+					border-radius: .2em;
+					background: #fe9;
+					box-shadow: inset 0 0 .8em #fc0, inset -.1em -.1em .1em #fa0 }
+				td.invalid {
+					display: none }
+				td:hover { cursor: pointer}
+	</style>
+</head>
+<body>
+	<div id="main-container">
+		<div id="puzzle">
+			<nav>
+				<span id="show-move">0</span>
+				<button>Help</button>
+			</nav>
+			<table id="block-box"></table>
+
+		</div>
+		<button id="shuffle-btn">SHUFFLE</button>
+		<div id="advance-level">
+			<p>You Are Advanced to Next Level</p>
+			<span id="level"></span>
+			<button></button> 
+		</div>
+	</div>
+
+	<script src="../JS-Modules/jQuery.js"></script>
+	<script>
+		$(document).ready(createPuzzle);		
+		let box, valid, size = 4, level = 1, counter = 0, isShuffling = false, move;
+
+		$('#shuffle-btn').click( () => (isShuffling ? shuffle.stopShuffle : shuffle)());
+
+		function createPuzzle () {
+			$('#show-move').text('Level ' + level);
+			$('#block-box').empty().html(`<tr>${'<td></td>'.repeat(size)}</tr>`.repeat(size + 1));
+			$('#block-box tr:first-child td, #block-box tr:last-child td, #block-box td:last-child').addClass('invalid');
+			box = $('#block-box td');
+			valid = box.not('.invalid');
+			
+			move = { from: 0, to: box.index(valid.last()) };
+
+			for (let i = 0; i < valid.length; i++)
+				valid.eq(i).text(String.fromCharCode(65 + i));
+	
+			valid.click( function () {
+				let k = box.index(this);
+				for (const n of [-size, -1, 1, size].map(n => k + n)) {
+					if (box.eq(n).hasClass('invalid')) continue;
+					if (box.eq(n).css('visibility') == 'hidden') {
+						$('#show-move').text(++counter);
+						slide(k, n);
+						break;
+					}
+				}
+				if (valid.last().css('visibility') == 'hidden')
+					checkForWin();
+			});
+		}
+
+		function shuffle () {
+			$('#show-move').text('0');
+			isShuffling = setInterval( () => {
+				let dir = [-size, -1, 1, size].map(n => move.to + n)
+					.filter(n => !(box.eq(n).hasClass('invalid') || n == move.from));
+				move.from = dir[Math.random() * dir.length | 0];
+				slide(move.from, move.to);
+			}, 200);
+
+			function stopShuffle() {
+				clearInterval(isShuffling);
+				isShuffling = false;
+			}
+			shuffle.stopShuffle = stopShuffle;
+		}
+
+		function checkForWin () {
+			let i = 0;
+			while (i < valid.length - 1) {
+				if (valid.eq(i).text() != String.fromCharCode(65 + i++)) return;
+			}
+			// Completing the Last Block
+			valid.last().css('visibility', 'visible');
+			valid.last().text(String.fromCharCode(65 + i));
+
+			setTimeout(() => alert('Win!'), 100);
+
+			// Advancing Levels
+			++level;
+			++size;
+			createPuzzle();
+		}
+
+		function slide(from, to) {
+			box.eq(from).css('visibility', 'hidden');
+			box.eq(to).css('visibility', 'visible');
+			box.eq(to).text(box.eq(from).text());
+			move.from = to;
+			move.to = from;
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>TheRealChess</title>
+	<link rel="icon" type="image/png" href="../favicon.png">
+	<link rel="stylesheet" href="Styles/StandardStyle.css">
+	<link rel="stylesheet" href="../../Frameworks/bootstrap-4.3.1.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!--	<script type="text/javascript" src="../../Frameworks/jquery-3.4.1.slim.min.js"></script>-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	<div id="container">
+<!--		<div class="badge badge-pill badge-danger">76</div>-->
+		<!-- <p id='test'>.</p>  -->
+		<div id="movelist"></div>
+
+		<div class="contain-3">
+			<span class="player-avatar" value="0">&#128100;</span>
+			<div class="divide-2">
+				<div class="player-name">Player 2</div>
+				<div class="captured"></div>
+			</div>
+			<div class="badge"></div>
+		</div>
+
+		<div id="boardContainer">
+			<table id='board'></table>
+			<div id="transparent-panel"></div>
+			<div id="promotion-dialog">
+				<p>Promote the Pawn to -</p>
+				<div>
+					<span></span><span></span><span></span><span></span>
+				</div>
+			</div>
+			<div id="game-over">
+				<span>Game Over</span>
+				<p></p>
+			</div>
+			<div id="start-game">
+				<div>
+					<label for="i-play">I will Play&ensp;</label>
+					<select name="my-turn" id="i-play">
+						<option value="0">White</option>
+						<option value="1">Black</option>
+					</select>
+					<label for="play-with">&ensp;with&ensp;</label>
+					<select name="my-oppo" id="play-with">
+						<option value="0">Human</option>
+						<option value="1">Bot</option>
+					</select>
+				</div>
+				<div>
+					<label for="game-type">Choose Variant&ensp;</label>
+					<select id="game-type">
+						<option value="atomic">Atomic</option> <!--capturing explodes surrounding non-pawns-->
+						<option value="standard">Standard Chess</option>
+						<option value="horde">Horde Chess</option>	<!--36 pawns vs standard-->
+						<option value="custom">Custom Setup</option>
+						<option value="960">Chess 960</option>
+						<option value="transcendental">Transcendental Chess</option>
+						<option value="upside-down">Upside-Down Chess</option> <!-- Both Sides are Switched -->
+						<option value="pawn-game">The Pawn's Game</option> <!--Only King and Pawn-->
+						<option value="king-of-hill">King of the Hill</option>
+						<option value="dark">Dark Chess</option> <!-- Only move on defends square-->
+						<option value="racing-king">Racing Kings</option>
+					</select>
+				</div>
+
+				<div>
+					<button class="select-avatar" value="0"></button>
+					<input type="text" placeholder="Your Name">
+				</div>
+				<div>
+					<button class="select-avatar" value="0"></button>
+					<input type="text" placeholder="Your Opponent's Name">
+				</div>
+
+				<div id="set-time-contain">
+					<label for="to-set-time">
+						<input type="checkbox" id="to-set-time"> Enable Time Mode
+					</label>
+				</div>
+				<div>
+					<label for="initial-time">Initial Time&ensp;</label>
+					<input type="range" id="initial-time" min="0" max="8" value="3">
+					<span></span>
+				</div>
+				<div>
+					<label for="bonus-time">Bonus Time&ensp;</label>
+					<input type="range" id="bonus-time" min="0" max="30" value="10", step="5">
+					<span></span>
+				</div>
+				<button id="start-btn">Start Game</button>
+			</div>
+		</div>
+
+		<div class="contain-3">
+			<span class="player-avatar" value="0">&#128100;</span>
+			<div class="divide-2">
+				<div class="player-name">Player 1</div>
+				<div class="captured"></div>
+			</div>
+			<div class="timer"></div>
+		</div>
+
+		<div id="buttons" class="btn-group">
+			<div class="btn-group">
+				<button class="btn dropdown-toggle" data-toggle="dropdown" onclick="$('#btn-menu').toggle();">&#9776;</button>
+				<div class="dropdown-menu">
+					<button class="dropdown-item" onclick="newGame()">New Game</button>
+					<button class="dropdown-item">Offer Draw</button>
+					<button class="dropdown-item">Resign</button>
+					<button class="dropdown-item" onclick="flipBoard()">Flip Board</button>
+					<button class="dropdown-item" onclick="copyPGN()">Copy PGN</button>
+					<button class="dropdown-item">Help!</button>
+				</div>
+			</div>
+			<button class="btn" onclick="compMove()">&#129302;</button>
+			<div class="flex-grow-1"></div>
+			<button class="btn" name="takeJump" value="-1">&#10094;</button>
+			<button class="btn" name="takeJump" value="1">&#10095;</button> <!-- &#8810; &#9664; &#9654; &#8811; -->
+		</div>
+	</div>
+	
+	<script type="text/javascript" src="StandardLogic.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Tic Tac Toe</title>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		#tic-tac-toe {
+			/* border-collapse: collapse; */
+			margin: auto;
+			cursor: pointer;
+			/* background: purple; */
+		}
+		#tic-tac-toe td {
+			height: 1.6em;
+			width: 1.6em;
+			text-align: center;
+			color: #224;
+			background: #0df;
+			/* box-shadow: inset 0 0 .4em #89b7; */
+			text-shadow: .04em .03em #cde;
+			font: 3em Baloo;
+		}
+		#tic-tac-toe td:hover { background: #0cf; }
+		#tic-tac-toe  td.on-win {
+			animation: blink-on-win .6s infinite;
+		}
+		@keyframes blink-on-win {
+			69% { background: #7f8; }
+			99% { background: #0cf; }
+		}
+	</style>
+</head>
+<body>
+	<table id="tic-tac-toe"></table>
+
+<script>
+	Array.prototype.count = function ( toCount ) {
+		return this.filter( n => n == toCount ).length;
+	};
+	const SYM = { PLAYER: 1, AI: 2 }, SIZE = 3;
+	let ticTacToe = Array( SIZE * SIZE ).fill(0), space = [], turn = SYM.PLAYER;
+
+	window.onload = () => {
+		let board = document.getElementById('tic-tac-toe');
+
+		for (let i = 0, row; i < SIZE; i++) {
+			row = board.insertRow(-1);
+			for (let j = 0, cell; j < SIZE; j++) {
+				cell = row.insertCell(-1);
+				cell.addEventListener( 'click', clicked );
+			}
+
+			space.push( row.childNodes );
+		}
+	};
+
+	function clicked () {
+		if ( this.textContent ) return;
+		let cell = {
+			r: this.parentElement.rowIndex,
+			c: this.cellIndex,
+			get ind () {
+				return this.r * SIZE + this.c;
+			}
+		}
+		makeMove( cell );
+	}
+
+	function makeMove( cell ) {
+		space[cell.r][cell.c].textContent = 'XO'[turn - 1];
+		ticTacToe[cell.ind] = turn;
+
+		const isWin = isWinningMove( ticTacToe, cell.ind, turn );
+		if ( isWin) {
+			console.log(`%c ${'XO'[turn - 1]} Won the Game!`, 'font-size: 40px; color: white');
+			for ( const i of isWin ) {
+				space[i / SIZE | 0][i % SIZE].classList.add('on-win');
+			}
+			return;
+		}
+
+		if ( turn == SYM.PLAYER ) {
+			let empty = minimax( ticTacToe, -1, 6, -Infinity, Infinity, true )[1];
+			console.log(empty);
+			setTimeout( () => {
+				makeMove( { r: empty / SIZE | 0, c: empty % SIZE, ind: empty } );
+			}, 500);
+			turn = SYM.AI;
+		} else turn = SYM.PLAYER;
+	}
+
+	function isWinningMove( TTT, ind, piece ) {
+		if ( ind != -1) for ( const arr of [[ind - ind % SIZE, 1], [ind % SIZE, SIZE], [0, SIZE + 1], [SIZE - 1, SIZE - 1]] ) {
+			const combo = Array.from( {length: SIZE}, (_, i) => arr[0] + arr[1] * i );
+			
+			if ( combo.every( n => TTT[n] == piece ) ) return combo;
+
+		}
+		return false;
+	}
+
+	function getScore( TTT, ind, piece ) {
+		if ( ind == -1 ) return;
+		let score = 0;
+
+		for ( const arr of [[ind - ind % SIZE, 1], [ind % SIZE, SIZE], [0, SIZE + 1], [SIZE - 1, SIZE - 1]] ) {
+			let com = Array.from( {length: SIZE}, (_, i) => arr[0] + arr[1] * i );
+			if ( !com.includes( ind ) ) continue;
+			const combo = com.map( n => TTT[n]);
+			// const combo = Array.from( {length: SIZE}, (_, i) => TTT[arr[0] + arr[1] * i] );
+			const voidCount = combo.count(0), oppCount = combo.count(piece == SYM.AI ? SYM.PLAYER : SYM.AI);
+			switch ( combo.count(piece) ) {
+				case SIZE: score += 100;	break;
+				case 2: score += (voidCount == 1) * 30 - 5; break;
+				case 1:
+					score += (oppCount == 2) * 70;
+					score += (voidCount == 2) * 2;
+					break;
+				default:
+					if ( [0, SIZE - 1, SIZE * (SIZE - 1), SIZE * SIZE - 1].includes(ind) )
+						score += 40;
+			}
+			// console.log(ind, com);
+		}
+		return score;
+	}
+
+	function minimax( TTT, blo, depth, alpha, beta, toMaximize = true ) {
+		if ( depth == 0  ) return [getScore( TTT, blo, SYM.AI ), -1];
+
+		if ( isWinningMove(TTT, blo, SYM.AI ) )
+			return [Infinity, -1];
+		if ( isWinningMove(TTT, blo, SYM.PLAYER ) )
+			return [-Infinity, -1];
+
+		let score, block, tempTTT = [], value,
+			validBlocks = TTT.map( ( n, i ) => (n == 0 ? i : false) ).filter(Number);
+		
+		if ( validBlocks.length == 0 ) return [0, -1];
+
+		if ( toMaximize ) {
+			value = -Infinity;
+			for ( const blk of validBlocks ) {
+				tempTTT = TTT.slice();
+				tempTTT[blk] = SYM.AI;
+				score = minimax( tempTTT, blk, depth - 1, alpha, beta, false )[0];
+				if ( score > value ) {
+					value = score
+					block = blk;
+					// console.log(value, block);
+				}
+				alpha = Math.max( alpha, value );
+				if ( alpha >= beta ) break;
+			}
+		} else {
+			value = Infinity;
+			for ( const blk of validBlocks ) {
+				tempTTT = TTT.slice();
+				tempTTT[blk] = SYM.PLAYER;
+				score = minimax( tempTTT, blk, depth - 1, alpha, beta, true )[0];
+				if ( score < value ) {
+					value = score
+					block = blk;
+				}
+				beta = Math.min( beta, value );
+				if ( alpha >= beta ) break;
+			}
+		}
+		return [ value, block ];
+	}
+	
+	function bestMove() {
+		let voids = ticTacToe.map( ( n, i ) => (n == 0 ? i : false) ).filter(Number);
+			
+		let empty = voids[Math.random() * voids.length | 0];
+
+		setTimeout( () => {
+			makeMove( { r: empty / SIZE | 0, c: empty % SIZE, ind: empty } );
+		}, 500);
+	}
+
+	function pickBestMove() {
+		let best = { score: -Infinity, block: -1 }, tempTTT = [],
+			validBlocks = ticTacToe.map( ( n, i ) => (n == 0 ? i : false) ).filter(Number);
+		
+		for ( const block of validBlocks ) {
+			tempTTT = ticTacToe.slice();
+			tempTTT[block] = turn + 1;
+			let score = getScore( tempTTT );
+			if ( score > best.score ) {
+				best.score = score;
+				best.block = block;
+			}
+		}
+
+		return best.block;
+	}
+</script>
+</body>
+</html>

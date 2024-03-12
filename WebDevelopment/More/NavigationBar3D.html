@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>3D Navigation Bar</title>
+	<style>
+		* {
+			outline: none;
+			user-select: none;
+			margin: 0;
+			padding: 0;
+		}
+		html {
+			--glass: rgba(50, 50, 60, 0.95);
+			--onHover: rgba(0, 80, 255, .9);
+		}
+		ul {
+			position: absolute;
+			top: 10%;	left: 50%;
+			transform: rotate(-35deg) skew(20deg, 5deg);
+		}
+		li { list-style-type: none }
+		a {
+			position: relative;
+			display: inline-block;
+			font-size: 1.5em;
+			color: white;
+			background: var(--glass);
+			padding: .5em 1em;
+			height: 1.5em;		width: 1em;
+			text-decoration: none;
+			box-shadow: 1px 1px 2px white;
+		}
+		a:before, a:after {
+			content: '';
+			position: absolute;
+			display: inline-block;
+			background: var(--glass);
+			-ms-text-align-last: auto;
+			text-align-last: auto;
+		}
+		a:before {
+			height: 2.5em;		width: 1em;
+			left: -1em;
+			transform: skewY(-45deg);
+			
+			z-index: -1;
+		}
+		a:after {
+			height: 1em;		width: 3em;
+			left: 1em;
+			transform: translate(-1.5em, 2em) skewX(-45deg);
+			z-index: -2;
+		}
+		
+		a:hover, a:hover:before, a:hover:after {
+			background: var(--onHover);
+			box-shadow: 0 0 60px 12px var(--onHover)
+		}
+		a:hover {
+/*			transform: translate(.9em, -.9em);*/
+			transition: transform .4s;
+			box-shadow: 0 0 70px 5px var(--onHover)
+		}
+	</style>
+</head>
+<body>
+	<ul>
+		<li><a href="#">☰</a></li>
+		<li><a href="#">☀</a></li>
+		<li><a href="#">☎</a></li>
+		<li><a href="#">☘</a></li>
+		<li><a href="#">☢</a></li>
+		<li><a href="#">☯</a></li>
+		<li><a href="#">♻</a></li>
+		<li><a href="#">⚒</a></li>
+		<li><a href="#">⛨</a></li>
+		<li><a href="#">⚶</a></li>
+	</ul>
+</body>
+</html>
+
+
+<!--
+
+body {
+  background: #f2f2f2;
+}
+
+ul {
+  position: relative;
+  transform: rotate(-35deg) skew(20deg,5deg);
+}
+
+.list-item {
+  background: #000;
+  color: #575757;
+  text-align: center;
+  height: 2.5em;
+  width: 4em;
+  vertical-align: middle;
+  line-height: 2.5em;
+  border-bottom: 1px solid #060606;
+  position: relative;
+  display: block;
+  text-decoration: none;
+  box-shadow: -2em 1.5em 0 #e1e1e1;
+  transition: all .25s linear;
+  
+  &:hover {
+    background: #ff6e42;
+    color: #fffcfb;
+    transform: translate(.9em, -.9em);
+    transition: all .25s linear;
+    box-shadow: -2em 2em 0 #e1e1e1;
+    
+    &:before, 
+    &:after { 
+      transition: all .25s linear; 
+    }
+    
+    &:before {
+      background: #b65234;
+      width: 1em;
+      top: .5em;
+      left: -1em;
+    }
+    
+    &:after {
+      background: #b65234;
+      width: 1em;
+      bottom: -2.5em;
+      left: 1em;
+      height: 4em;
+    }
+  }
+  
+  &:before, 
+  &:after {
+    content: '';
+    position: absolute;
+    transition: all .25s linear;
+    width: .5em;
+  }
+
+  &:after {
+    height: 4em;
+    background: #181818;
+    bottom: -2.25em;
+    left: 1.5em;
+    transform: rotate(90deg) skew(0,45deg);
+  }
+  
+  &:before {
+    height: 2.5em;
+    background: #121212;
+    top: .25em;
+    left: -.5em;
+    transform: skewY(-45deg);
+  }
+}
+
+
+-->

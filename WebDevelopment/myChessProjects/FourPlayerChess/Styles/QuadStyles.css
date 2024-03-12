@@ -1,0 +1,113 @@
+@charset "UTF-8";
+/* This file is Generated from SASS */
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI';
+}
+
+body {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  counter-reset: num 9 abc;
+  text-align: center;
+  background: #456;
+}
+
+body #container {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  font-size: 13px;
+  position: relative;
+  padding: 1em;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+#board {
+  border-collapse: collapse;
+  -webkit-transition: .5s;
+  transition: .5s;
+  /* Creating Checkboard */
+}
+
+#board td:not(.invalid) {
+  font-size: 2em;
+  height: 1.33em;
+  width: 1.3em;
+  text-align: center;
+  -webkit-transition: .2s;
+  transition: .2s;
+  -webkit-box-shadow: inset 0 0 0.1em 0.03em rgba(0, 0, 0, 0.4);
+          box-shadow: inset 0 0 0.1em 0.03em rgba(0, 0, 0, 0.4);
+  background: lightyellow;
+  z-index: -1;
+}
+
+#board td.invalid {
+  font-size: 0;
+}
+
+#board td.invalid:active {
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+
+#board td.invalid:first-child, #board td.invalid:last-child {
+  display: none;
+}
+
+#board:hover {
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
+#board #red {
+  color: red;
+}
+
+#board #green {
+  color: green;
+}
+
+#board #blue {
+  color: blue;
+}
+
+#board #black {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+#board tr:nth-child(even) td:nth-child(even):not(.invalid),
+#board tr:nth-child(odd) td:nth-child(odd):not(.invalid) {
+  background: #56f2ff;
+}
+
+/* Extra Stylings */
+.path:before {
+  content: '\2B24';
+  /* • ● ⚫ ⬤ */
+  position: relative;
+  top: -.2em;
+  font-size: .7em;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+td.capture {
+  background: radial-gradient(white, #f88) !important;
+}
+
+.trail {
+  background: radial-gradient(white, #ffa 70%) !important;
+}
+
+td.castle {
+  background: radial-gradient(white, #fbf) !important;
+}
+/*# sourceMappingURL=QuadStyles.css.map */

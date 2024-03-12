@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Calendar Insane</title>
+	<style>
+		body {
+			background: #ccc;
+			font-family: arial;
+			cursor: pointer;
+			margin: 0;
+		}
+		#page {
+			display: table;
+			margin: auto;
+			background: #fff;
+			padding: 20px;
+		}
+		h5 {
+			padding: 0;
+			margin: 0;
+			font-weight: 500;
+			text-align: center;
+		}
+		#dispInfo {
+			width: 100%;
+			margin: auto;
+			text-align: center;
+			padding-bottom: 20px;
+		}
+		.preNext { width: 50px }
+		.preNext:active { background: #ddd }
+		#month { font: bold 42px "Segoe UI" }
+		#year {
+			border: none;
+			width: 6ch;
+			text-align: center;
+			margin-left: 15px;
+			font: bold 20px cambria;
+		}
+		
+		#myCal tr:first-child td { 			/* Days of the Week! */
+			background: #222;
+			font: bold 18px "Segoe UI";
+			text-align: center;
+			padding: 8px;
+			border-radius: 5px;
+			color: white;
+		}
+/*		#myCal tr:first-child td:not(:last-child) { box-shadow: 9px 0 #222 }*/
+		#myCal tr:first-child td:first-child { background: #ff000f }
+		
+		#myCal tr:not(:first-child) td {		/* The Calender Numbers */
+			border: .5px solid;
+			padding: 15px 7px;
+			border-radius: 3px;
+			text-align: center;
+			width: 45px;
+			font-size: 25px;
+		}
+		#myCal tr:not(:first-child) td:first-child { color: #ff000f }
+		#myCal tr:not(:first-child) td:not(.thisMonth) { color: #888 }
+		#myCal .thisMonth {
+			font-weight: bold;
+			color: black;
+		}
+		h6 {
+			text-align: right;
+			margin: 0;
+			padding-top: 5px;
+		}
+/*		#myCal td:nth-child(2) { background: ;}*/
+	</style>
+</head>
+
+<body>
+	<div id="page">
+		<h5>The Real Working Calendar!</h5> <hr>
+		<table id="dispInfo">
+			<tr>
+				<td rowspan="2" class="preNext">&#9664;</td>
+				<td id="month"></td>
+				<td rowspan="2" class="preNext">&#9654;</td>
+			</tr>
+			<tr>
+				<td><input type="number" id="year"></td>
+			</tr>
+		</table>
+		<table id="myCal"></table>
+		<h6>insta: @curiosbasant</h6>
+	</div>
+</body>
+<script>
+	function calendarFrame() {
+		let tbl = document.querySelectorAll("table")[1];
+		
+		for (let i = 0, j; i < 7; i++) {		j = 7;
+			tbl.appendChild(document.createElement("tr"));
+			while (j-- > 0)
+				tbl.querySelectorAll("tr")[i].appendChild(document.createElement("td"));
+		}
+		box = tbl.querySelectorAll("td");
+	}
+	calendarFrame();
+	
+	let preNext = document.getElementsByClassName("preNext"),
+		 yyObj = document.querySelector("#year"),
+		 monNum = new Date().getMonth(), 
+		 yFNum = new Date().getFullYear();
+	fillCalendar(monNum, yFNum);
+	
+	yyObj.value = yFNum;
+	yyObj.addEventListener("input", function () { fillCalendar(monNum, yFNum = this.value); });
+	preNext[0].addEventListener("click", () => changeMonth(false));
+	preNext[1].addEventListener("click", () => changeMonth(true));
+
+	function changeMonth(bool) {
+		if (bool) {
+			if (monNum !== 11) monNum++;
+			else { yFNum++; monNum = 0; }
+		}
+		else {
+			if (monNum !== 0) monNum--;
+			else { yFNum--; monNum = 11; }
+		}
+		yyObj.value = yFNum;
+		fillCalendar(monNum, yFNum);
+	}
+	
+	function fillCalendar(mm, yy) {
+		var mod = n => (n < 0 ? 12 + n % 12 : n % 12);
+		let flag = dayOfWeek(mm, yy) + 7,
+			 temp = new Date().getDate() + flag - 1,
+			 weeks = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+		let month = {
+			odds : [3, 0, 3, 2, 3, 2, 3, 3, 2, 3, 2, 3],
+			name : ['January','February','March','April','May','June','July','August','September','October','November','December']
+		};
+		document.querySelector("#month").innerHTML = month.name[mm];
+		
+		for (let i = 0; i < box.length; i++) {
+			if (i < 7) box[i].innerHTML = weeks[i];	// First Week Row
+			else {
+				box[i].id = "box" + i;
+				box[i].style.background = "white";
+				box[i].onclick = onBoxClick;
+				if (i < flag) {											// Previous Month
+					box[i].innerHTML = i + month.odds[mod(mm - 1)] - flag + 29;
+					box[i].classList.remove("thisMonth");
+				}
+				else if (i < month.odds[mm] + flag + 28) {		// Current Month
+					box[i].innerHTML = i - flag + 1;
+					box[i].classList.add("thisMonth");
+				} 
+				else {														// Next Month
+					box[i].innerHTML = i - month.odds[mm] - flag - 27;
+					box[i].classList.remove("thisMonth");
+				}
+			}
+		}
+
+		if (mm === new Date().getMonth())
+			box[temp].style.background = "radial-gradient(white 10%, #12ffe4)";
+		
+		function onBoxClick() {
+			box[temp].style.background = "white";
+			this.style.background = "radial-gradient(white 10%, #12ffe4)";
+			temp = this.id.substr(3);
+		}
+		
+		function dayOfWeek(mon, year) {	// Here, mon ranges b/w [0, 12)
+			let magicNum = [6, 2, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4],
+				 odday = 1;
+			if (mon < 2 && (year % 400 == 0 || year % 100 != 0 && year % 4 == 0)) {
+				odday--; month.odds[1] = 1;
+			}
+			year = year % 400;
+			odday += magicNum[mon] + (year - year % 100) / 20 + year % 100 + (year % 100) / 4 | 0;
+			return odday % 7;
+		}
+	}
+	
+/*	function fillCalendar(mm, yy) {
+		var mod = n => (n < 0 ? 12 + n % 12 : n % 12);
+		let flag = dayOfWeek(mm, yy) + 7,
+			 temp = new Date().getDate() + flag - 1,
+			 odmon = [3, 0, 3, 2, 3, 2, 3, 3, 2, 3, 2, 3],
+			 weeks = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
+			 month = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+		document.querySelector("#month").innerHTML = month[mm];
+		
+		for (let i = 0; i < box.length; i++) {
+			if (i < 7) box[i].innerHTML = weeks[i];	// First Week Row
+			else {
+				box[i].id = "box" + i;
+				box[i].style.background = "white";
+				box[i].onclick = onBoxClick;
+				if (i < flag) {											// Previous Month
+					box[i].innerHTML = i + odmon[mod(mm - 1)] - flag + 29;
+					box[i].classList.remove("thisMonth");
+				}
+				else if (i < odmon[mm] + flag + 28) {		// Current Month
+					box[i].innerHTML = i - flag + 1;
+					box[i].classList.add("thisMonth");
+				} 
+				else {														// Next Month
+					box[i].innerHTML = i - odmon[mm] - flag - 27;
+					box[i].classList.remove("thisMonth");
+				}
+			}
+		}
+
+		if (mm === new Date().getMonth())
+			box[temp].style.background = "radial-gradient(white 10%, #12ffe4)";
+		
+		function onBoxClick() {
+			box[temp].style.background = "white";
+			this.style.background = "radial-gradient(white 10%, #12ffe4)";
+			temp = this.id.substr(3);
+		}
+		
+		function dayOfWeek(mon, year) {	// Here mon starts at 0
+			let magicNum = [6, 2, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4],
+				 odday = 1;
+			if (mon < 2 && (year % 400 == 0 || year % 100 != 0 && year % 4 == 0)) {
+				odday--; odmon[1] = 1;
+			}
+			year = year % 400;
+			odday += magicNum[mon] + (year - year % 100) / 20 + year % 100 + (year % 100) / 4 | 0;
+			return odday % 7;
+		}
+	}*/
+</script>
+
+</html>

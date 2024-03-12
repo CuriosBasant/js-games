@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Canvas</title>
+</head>
+<body>
+	<canvas id="myCanvas"></canvas>
+</body>
+<script>
+	var canvas = document.getElementById("myCanvas");
+	var ctx = canvas.getContext("2d");
+	ctx.fillStyle = "#FF0000";
+	ctx.fillRect(0,0,1560,75);
+	ctx.beginPath();
+ctx.arc(95,50,40,2*Math.PI,0);
+ctx.stroke();
+</script>
+</html>

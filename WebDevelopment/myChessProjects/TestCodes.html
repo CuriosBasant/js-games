@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		* { outline: none; }
+		
+		.count-down {
+			display: table;
+			font: 80px 'Segoe UI';
+			margin: 0 auto;
+		}
+		.container {
+			/*display: flex;*/
+			position: relative;
+			height: 300px;
+			width: 300px;
+			border: 1px solid;
+			background: yellow;
+		}
+		.container * {
+			top: 50%;
+			left: 50%;
+			position: absolute;
+			transform: translate(-50%,-50%);
+			margin: auto;
+			border: 1px solid;
+		}
+		.one {
+			height: 120px;
+			width: 120px;
+			background: red;
+		}
+		.two {
+			height: 90px;
+			width: 90px;
+			background: green;
+		}
+		.three {
+			height: 60px;
+			width: 60px;
+			background: blue;
+		}
+		
+	</style>
+</head>
+<body><div>&#129302;&#129489;&#129490;&#129492;&#129332;&#128120;&#128115;&#128114;&#128105;&#128104;&#128103;&#128102;</div>
+	<div>&#129489;&#129490;&#129302;&#129492;&#129332;&#129334;&#128120;&#128118;&#128117;&#128116;&#128115;&#128114;&#128113;&#128105;&#128104;&#128103;&#128102;&#127877;</div>
+	
+	<div class="container">
+		<div class="one"></div>
+		<div class="two"></div>
+		<div class="three"></div>
+	</div>
+	
+	
+	<div class="count-down">0:00</div>
+	<button id='btn' onclick="func()">Start</button>
+
+</body>
+<script type="text/javascript" src="../jQueryFile/jquery-3.3.1.js"></script>
+<script>
+	let sec = 600, bl = true, timer;
+	
+	function func() {
+		console.log('g');
+		if (bl) {
+			timer = window.setInterval(() => {
+				sec--;
+				$('.count-down').text(`${sec / 60 | 0}:${(sec % 60).toString().padStart(2, '0')}`);
+			}, 1000);
+		}
+		else clearInterval(timer);
+		bl = !bl;
+	}
+</script>
+</html>
+
+<!--
+Top Survival Movies
+10.The Shallows 
+9. Jungle
+8. Escape Plan
+7. The Mountain Between Us
+6. Everest
+5. 127 Hours
+4. The Martian
+3. I Am legend
+2. Gravity
+1. Cast Away
+
+The Way Back
+The Grey
+The Revenent
+The Passenger
+
+Top Scariest Movies
+10.The Ruins
+9.Jigsaw
+8.Escape Room
+7.Halloween
+6.Friday The 13th
+5.Saw
+4.Cabin fever
+3.Truth or Dare
+2.Scream
+1.Hush
+
+Top Horror
+No.1 HEREDITARY
+NO.2 INSIDIOUS PART2
+NO.3 GET OUT
+NO.4 US
+NO.5 THE CONJURING 2
+NO.6 THE BADABOOK
+NO.7 VERONICA
+NO.8 IT
+NO.9 IT FOLLOWS
+NO.THE VISIT
+-->

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Math Exercise</title>
+	<style>
+		* { outline: none }
+		body {
+			padding-left: 30px;
+			width: 500px;
+			margin: auto;
+			background: url(/Images/32.png) 1000px;;
+		}
+		h1 {
+			text-align: center;
+			padding: 30px;
+			font: bold 40px "segoe ui";
+		}
+		#tab {
+			display: flex;
+		}
+		#score {
+			font: 20px verdana;
+			flex: 1;
+		}
+		.heart {
+			color: #ce1212;
+			font-size: 25px;
+			letter-spacing: 3px;
+			text-align: right;
+		}
+		form {
+			display: table;
+			background: rgba(10, 10, 10, 0.3);
+			margin: 50px auto;
+			padding: 50px 60px;
+			border-radius: 30px;
+		}
+		#eqn, #ans {
+			font: 50px cambria;
+		}
+		#ans {
+			width: 60px;
+			padding: 0;
+			text-align: center;
+			background: transparent;
+			border-style: none;
+			border-bottom: 2px solid;
+		}
+		#check {
+			font-size: 40px;
+			background: green;
+			border: 3px outset darkgreen;
+			padding: 0 15px;
+			float: right;
+			
+		}
+		input[type=number]::-webkit-inner-spin-button, 
+		input[type=number]::-webkit-outer-spin-button { 
+			-webkit-appearance: none;
+		}
+	</style>
+</head>
+<body>
+	<h1>Kid Table Practice</h1>
+	<div id="tab">
+		<span id="score">Score: 0</span>
+		<span class="heart">&#10084;</span>
+		<span class="heart">&#10084;</span>
+		<span class="heart">&#10084;</span>
+	</div>
+	<form action="">
+		<span id="eqn"></span>
+		<input type="number" id="ans"> <br>
+	</form>
+	<button id="check">&#10004;</button>
+</body>
+<script>
+	let eqn = document.getElementById("eqn"),
+		 
+		 count = 0, heart = 3,
+		 score = document.getElementById("score"),
+		 lives = document.getElementsByClassName("heart");
+	
+	document.getElementById("check").addEventListener("click", play);
+	
+	function next() {
+		num = [rNum(), rNum()];
+		eqn.innerHTML = `${num[0]} &times ${num[1]} = `;
+	}	next();
+	
+
+	function play() {
+		let ans = document.getElementById("ans");
+		
+		if (ans.value == num[0] * num[1]) {
+			count++;
+			score.innerHTML = `Score : ${count * 10}`;
+			next();
+		}
+		else {
+			if (heart) lives[--heart].style.color = "grey";
+		}
+		ans.value = '';
+		
+		ans.focus();
+	}
+	
+	function rNum() {
+		return (9 * Math.random() | 0) + 1;
+	}
+</script>
+</html>

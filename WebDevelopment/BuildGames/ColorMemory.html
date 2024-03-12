@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Color Memory Game</title>
+	<style>
+		#tab {
+			display: flex;
+		}
+		#score {
+			font: 20px verdana;
+			flex: 1;
+		}
+		.heart {
+			color: #ce1212;
+			font-size: 25px;
+			letter-spacing: 3px;
+			text-align: right;
+		}
+		#colorText {
+			font: bold 60px 'Segoe UI';
+			text-transform: uppercase;
+			text-align: center;
+		}
+		table {
+			margin: auto;
+		}
+		td {
+			border: 1px solid;
+			padding: 12px 10px;
+			text-align: center;
+			width: 80px;
+			font: 15px arial;
+		}
+		td:hover {
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<div id="tab">
+		<span id="score">Score: 0</span>
+		<span class="heart">&#10084;</span>
+		<span class="heart">&#10084;</span>
+		<span class="heart">&#10084;</span>
+	</div>
+	<p id='colorText'></p>
+	<table>
+		<tr>
+			<td>RED</td>
+			<td>YELLOW</td>
+			<td>BROWN</td>
+			<td>PINK</td>
+		</tr>
+		<tr>
+			<td>GREEN</td>
+			<td>PURPLE</td>
+			<td>ORANGE</td>
+			<td>BLUE</td>
+		</tr>
+	</table>
+</body>
+<script>
+	var color = document.getElementsByTagName("td"),
+		 cName = document.getElementById('colorText');
+	for (let i = 0; i < color.length; i++) {
+		color[i].addEventListener("click", function () { letsPlay(); });
+	}
+	letsPlay();
+	
+	function letsPlay() {
+		/*if (this.innerHTML == color[r_Val[1]].innerHTML) {
+			alert("WoW! Correct!");
+		}*/
+		this.innerHTML = "hello";
+		let r_Val = [color.length * Math.random() | 0, color.length * Math.random() | 0];
+		cName.innerHTML = color[r_Val[0]].innerHTML;
+		cName.style.color = color[r_Val[1]].innerHTML;
+
+		
+		return letsPlay();
+	}
+	
+</script>
+</html>

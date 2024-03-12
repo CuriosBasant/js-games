@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Video Player</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <section id="container">
+      <div id="video-player">
+        <video src="./videos/Ghoomar.mp4" type="video/mp4"></video>
+        <div id="button-controls">
+          <div id="seek_bar">
+            <input class="slider" type="range" min="0" max="100" value="0" />
+          </div>
+
+          <!-- <button id="previous" class="material-icon">skip_previous</button> -->
+
+          <button id="pause_resume" class="material-icon" style="font-size: 3em;">
+            play_arrow
+          </button>
+
+          <!-- <button id="next" class="material-icon">skip_next</button> -->
+
+          <button id="volume" name="volume" class="material-icon">volume_up</button>
+
+          <div id="volume_bar">
+            <input class="slider" type="range" min="0" max="100" value="50" />
+          </div>
+
+          <span id="timer"></span>
+
+          <button id="toggle_fullscreen" class="material-icon">fullscreen</button>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Form</title>
+	<style>
+		* { outline: none }
+		body {
+			background: url('../images/15.jpg');
+		}
+		form {
+			background: rgba(247, 247, 247, 0.6);
+			display: table;
+			border: 3px solid;
+			margin: auto;
+			padding: 20px;
+			border-radius: 10px;
+		}
+		label {
+			display: block;
+			width: 80px;
+			font: 15px verdana;
+		}
+		input {
+			border-style: hidden;
+			border-bottom: 1px solid;
+			padding: 0px 5px;
+			margin-top: 10px;
+			background: rgba(233, 233, 233, 0);
+		}
+		input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+			-webkit-appearance: none;
+		}
+		#reset, #sbmt {
+			background: rgba(38, 183, 217, 0.82);
+			border: 1px solid #646464;
+			padding: 5px 10px;
+			border-radius: 3px;
+		}
+	</style>
+</head>
+<body>
+	<form>
+			<label for="name">Name</label>
+			<input type="text" id='name'> <br>
+			<label for="num">Number</label>
+			<input type="number" id='num'> <br>
+			<label for="pass">Password</label>
+			<input type="password" id='pass'> <br>
+			<label for="clss">Class</label>
+			<input type="text" id='clss'> <br>
+			<input type="reset" id='reset'>
+			<input type="submit" id='sbmt'>
+	</form>
+</body>
+<script>
+	
+</script>
+</html>

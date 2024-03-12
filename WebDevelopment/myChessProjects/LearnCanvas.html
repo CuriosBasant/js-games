@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Learning Canvas</title>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+			overflow: hidden;
+		}
+		canvas {
+			background: #aab;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="myCanvas"></canvas>
+	<script>
+		let canvas = document.getElementById('myCanvas');
+		let ctx = canvas.getContext('2d');
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+
+		function Circle(x, y, dx, dy, r) {
+			this.x = x;
+			this.y = y;
+			this.dx = dx;
+			this.dy = dy;
+			this.r = r;
+			this.color = colors[getRandomNum(colors.length)];
+
+			this.draw = function () {
+				ctx.beginPath();
+				ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2, false);
+				// ctx.strokeStyle = 'red';
+				// ctx.stroke();
+				ctx.fillStyle = this.color;
+				ctx.fill();
+			}
+			this.update = function () {
+				if (this.x < this.r || this.x > innerWidth - this.r) {
+					this.dx *= -1;
+				}
+				if (this.y < this.r || this.y > innerHeight - this.r) {
+					this.dy *= -1;
+				}
+
+				this.x += this.dx;
+				this.y += this.dy;
+
+				this.draw();
+			}
+		}
+
+		let circles = [], colors = ['#FF5D54','#E84D7E','#FF62E1','#CD4DE8','#B354FF'], i = 0, loop;
+		
+		loop = window.setInterval(() => {
+			let r = getRandomNum(10, 30),
+				x = getRandomNum(r, innerWidth - r * 2),
+				y = getRandomNum(r, innerHeight - r * 2),
+				dx = (Math.random() - 0.5) * 5,
+				dy = (Math.random() - 0.5) * 5;
+
+			circles.push(new Circle(x, y, dx, dx, r));
+
+			if (++i > 100) window.clearInterval(loop);
+		}, 100);
+
+		let x = 200;
+		function animate() {
+			requestAnimationFrame(animate);
+			ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+			for (let i = 0; i < circles.length; i++) {
+				circles[i].update();
+
+			}
+			
+		} animate();
+
+		function getRandomNum(min = 0, max = 0) {
+			if (max < min) [min, max] = [max, min];
+			return ~~(Math.random() * (max - min) + min);
+		}
+	</script>
+</body>
+</html>

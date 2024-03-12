@@ -1,0 +1,104 @@
+* {
+	outline: none;
+	padding: 0;
+	margin: 0;
+	
+}
+html {
+	--lightColor : lightyellow; /*#e0fdff;*/
+	--darkColor : #3EF;
+	--transGrey : #0019;
+}
+
+body {
+	background: #778;
+	cursor: default;
+/*	overflow-x: hidden;*/
+}
+#container {
+	display: table;
+	margin: auto;
+	padding: 1em;
+	background: #ABCD;
+	border-radius: .2em;
+}
+
+#board {
+	user-select: none;
+	border-collapse: collapse;
+/*	border-spacing: 1px;*/
+	margin: 2em auto;
+/*	border: 3em solid var(--transGrey);*/
+/*	background-clip: padding-box;*/
+/*	box-shadow: inset 0 0 10em red;*/
+	background: url('../images/BoardSmall.png') var(--darkColor);
+	background-size: 6em;
+/*	background-repeat: space;*/
+		/*repeating-linear-gradient( 
+			var(--darkColor), var(--darkColor) 12.5%, transparent 12.5%, transparent 25%
+		), repeating-linear-gradient( 90deg,
+			var(--darkColor), var(--darkColor) 12.5%, transparent 12.5%, transparent 25%
+		);*/
+}
+#board:hover { cursor: grab }
+#board td {
+	font-size: 2em;
+	text-align: center;
+	height: 1.5em;
+	width: 1.5em;
+/*	background: transparent*/
+		/*var(--lightColor) url("square/paper_W.bmp")*/;
+	transition: transform .9s;
+/*	z-index: -1;*/
+}
+#board td:not(.sqr-active) {
+	box-shadow: inset 0 0 .3em #0003;
+	
+}
+#board .sqr-active {
+/*
+	position: relative;
+	font-size: 2.5em;
+*/
+	background: transparent !important;
+}
+#board td:active { cursor: grabbing;  }
+/*#board tr:nth-child(even) td:nth-child(odd),
+#board tr:nth-child(odd) td:nth-child(even)
+{ background: var(--darkColor) }*/
+/*• ● ⚫ ⬤ 2B24*/
+#board .path:after {
+	content: '\26AB';			  
+	position: relative;
+	font-size: .65em;
+	top: -.1em;
+	color: #0015;
+}
+#board .on-drag-hover:before {
+	content: '\26AB';
+	position: absolute;
+	color: #0013;
+	font-size: 1.8em;
+/*	transform: translate(-.58em, -.73em)*/
+}
+#board td.highlight {
+	background: radial-gradient(white, #ffa 100%);
+/*	box-shadow: inset 0 0 0 .1em #FFa;*/
+}
+#board td.capture { background: radial-gradient(white, #f88) }
+#board td.castle { background: radial-gradient(white, #fbf) }
+
+#bottom-button, .btn:hover {
+	display: flex;
+	color: var(--darkColor);
+	background: var(--transGrey);
+}
+.btn {
+/*	display: inline-block;*/
+	padding: .1em 1em;
+	font-size: 1.5em;
+	background: transparent;
+	border: 0;
+	color: white;
+	transition: .2s;
+}

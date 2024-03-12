@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My First Web Programming!</title>
+</head>
+<style>
+	body{ /background: #0ff }
+	ul{
+		position: absolute;
+		width: 100%;
+		top: 0; left: 0;
+		background: #333;
+		list-style-type: none;
+		margin: auto; padding: 0;
+		border-bottom: 4px solid red;
+	}
+	li{
+		float: left;
+		font: 15px sans-serif;
+		font-weight: 600;
+		padding: 11px;
+		height: 20px;
+		color:white;
+		letter-spacing: 0.5px;
+	}
+	li:hover{
+		text-shadow: 2px 2px 2px black;
+		position: relative;
+		background: red;
+		cursor: pointer;
+	}
+	li:hover #content{ display: block; }
+	
+	#content{
+		position:absolute;
+		color:#555;
+		padding: 8px 4px;
+		display: none;
+		top:41px; left:0;
+		border-top: 4px solid red;
+		text-shadow: 0 0;
+		box-shadow: 3px 3px 2px #777;
+		font:12px;
+		font-weight: normal;
+		background: #eee;
+		z-index: 1;
+	}
+	img{
+		position: relative;
+		width: 20px;
+	}
+	p:hover{ background: #555; color:#EEE }
+	#round{
+		position: absolute;
+		top:100px;
+		height: 150px;
+		width: 150px;
+		border: 2px solid #f00;
+        background: rgb(255,0,0,.5)
+	}
+</style>
+<body>	
+	<ul>
+		<li><img src="img/home.ico"></li>
+		<li>C++
+			<div id="content">
+				<p>Basics</p>
+				<p>Intermediate</p>
+				<p>Advanced</p>
+			</div>
+		</li>
+		<li>Python
+			<div id="content">
+				<p>Basics</p>
+				<p>Intermediate</p>
+				<p>Advanced</p>
+			</div>
+		</li>
+		<li>JavaScript</li>
+		<li>HTML</li>
+		<li>CSS</li>
+		<li>Kotlin</li>
+		<li>PHP</li>
+		<li>Java</li>
+	</ul>
+	<div id="round"></div>
+</body>
+</html>

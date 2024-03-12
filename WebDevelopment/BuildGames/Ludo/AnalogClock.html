@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Analog Clock</title>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		#clock-frame {
+			display: flex;
+			position: relative;
+			width: 33rem;
+			height: 33rem;
+			margin: auto;
+			border: .5em solid;
+			border-radius: 50%;
+			background:
+				radial-gradient(white 68%, transparent 0),
+				linear-gradient(#f555 50%, #5f55 0),
+				repeating-conic-gradient(from -1deg, black 0deg 2deg, transparent 2deg 30deg),
+				repeating-conic-gradient(from -.5deg, #444 0deg 1deg, white 1deg 6deg);
+/*			box-shadow: 0 0 0 1rem linear-gradient(red, green)*/
+/*			border-image: linear-gradient(red,blue);*/
+		}
+		#clock-elements {
+			position: relative;
+			margin: auto;
+			height: 2rem;
+			width: 2rem;
+			border-radius: 50%;
+			background: radial-gradient(black,#555);
+/*			z-index: 1;*/
+		}
+		#clock-elements * {
+			position: absolute;
+			top: 50%; left: 50%;
+/*			transform: translate(-50%,-50%);*/
+/*			z-index: -1;*/
+		}
+		#clock-elements .hand {
+			transform-origin: top;
+/*			z-index: -1;*/
+/*			transform: translate(-50%,-50%);*/
+			width: .5rem;
+			margin-left: -.25em;
+		}
+		#hour-hand {
+			border-bottom: 8em solid;
+		}
+		#minute-hand {
+			border-bottom: 10rem solid red;
+		}
+		#second-hand {
+/*			border-top: 12rem solid yellow;*/
+			border-bottom: 12rem solid yellow;
+			box-shadow: 0 -3rem green;
+			transition: .2s;
+		}
+		#am-pm {
+			font: bold 3rem "Agency FB";
+			transform: translate(-50%, 150%);
+/*			z-index: -2;*/
+		}
+		#numbers {
+			font: bold 3.5rem "Agency FB";
+/*			transform: none;*/
+			top: -50%;
+			left: 10%;
+/*			left: -.3em;*/
+		}
+	</style>
+</head>
+<body>
+	<div id="clock-frame">
+		<div id="clock-elements">
+			<div id="am-pm">A.M</div>
+			<div id="numbers"></div>
+			<div id="hour-hand" class="hand"></div>
+			<div id="minute-hand" class="hand"></div>
+			<div id="second-hand" class="hand"></div>
+		</div>
+	</div>
+	<script>
+		let stop = false,scnd,
+			rotateAnime = [
+				{ transform: 'rotate(0deg)' }, 
+				{ transform: 'rotate(360deg)' }
+			];
+	window.onload = () => {
+		let clockNums = document.getElementById('numbers');
+		for ( let i = 0; i < 12; i++ ) {
+			let numNode = document.createElement('span');
+			numNode.textContent = i + 1;
+			numNode.style.transform = `rotate(${i * 30-60}deg) translate(4em) rotate(${(2 - i) * 30}deg)`;
+//			numNode.style.transform = `rotate(${i * 30}deg) translate(14rem) rotate(${(2 - i) * 30}deg)`;
+			clockNums.appendChild(numNode);
+		}
+		
+		
+		let clockHands = document.getElementsByClassName('hand');
+//		setTimeout( () => clockHands[0].click(), 100);
+		let clockSound = new Audio('/clock_tick1.wav');
+		let time = new Date(), fast = 1,
+			 ss = time.getSeconds(),
+			 mm = time.getMinutes() + ss / 60, 
+			 hh = time.getHours() + mm / 60;
+		
+	/*	clockHands[0].animate(rotateAnime, {	// Hour Hand
+			duration: 12 * 3600 * 1000,
+			iterations: Infinity
+		});
+		clockHands[1].animate(rotateAnime, {	// Minute Hand
+			duration: 3600 * 1000,
+			iterations: Infinity
+		});
+		scnd = clockHands[2].animate(rotateAnime, {	// Second Hand
+			duration: 60 * 800,
+			iterations: Infinity
+		});*/
+		
+		let clockLoop = setInterval( () => {
+			if(stop) clearInterval(clockLoop);
+			clockHands[0].style.transform = `rotate(${hh * 30}deg)`;
+			clockHands[1].style.transform = `rotate(${mm * 6}deg)`;
+			clockHands[2].style.transform = `rotate(${ss * 6}deg)`;
+			ss++;
+			mm += 1 / 60;
+			hh += 1 / 3600;
+//			setTimeout( () => clockSound.play(), 100);
+			scnd.pause();
+			setTimeout( () => scnd.play(), 300);
+
+		}, 800);
+	};
+	</script>
+</body>
+</html>

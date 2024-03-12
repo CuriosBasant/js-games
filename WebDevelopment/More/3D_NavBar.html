@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		body {
+			background: grey;
+			transform-style: preserve-3d;
+		}
+		nav {
+			position: absolute;
+			
+			transform: translateY(300px) rotateX(40deg);
+			perspective: 800px;
+			perspective-origin: 800px;
+		}
+		p {
+			float: left;
+			transform: rotateX(50deg);
+			transform-origin: ;
+		}
+		a {
+			font: 20px arial;
+			/border: 1px solid;
+			padding: 20px;
+			margin: 0;
+			transition: .5s background;
+			background: #222;
+			color: white;
+		}
+		p:before, p:after {
+			content: '';
+			display: block;
+			position: relative;
+			height: 20px;
+			top: 53px;
+			background: red;
+		}
+		p:after {
+			top: -22px;
+			left: 50px;
+			width: 62px;
+			transform: rotateY(90deg) rotateZ(90deg)
+		}
+		a:hover {
+			background: red;
+			color: white;
+			cursor: pointer; 
+		}
+	</style>
+</head>
+<body>
+	<nav>
+		<p><a>ABC</a></p>
+		<p><a>ABC</a></p>
+		<p><a>ABC</a></p>
+		<p><a>ABC</a></p>
+		<p><a>ABC</a></p>
+		<p><a>ABC</a></p>
+	</nav>
+</body>
+</html>

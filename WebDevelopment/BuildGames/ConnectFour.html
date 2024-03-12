@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Connect Four</title>
+	<style>
+		table {
+			margin: auto;
+			border: 2px solid;
+			padding: 8px;
+			background: #ff9;
+			border-spacing: 5px;
+		}
+		td {
+			border: 1px solid;
+			border-radius: 50%;
+			height: 45px;
+			width: 45px;
+			background: white;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<table></table>
+</body>
+<script>
+	var row = 10, col = 8;
+	function createG(r, c) {
+		var tbl = document.querySelector('table');
+		tbl.innerHTML = '';
+		for (let i = 0, j; i < r; i++) {
+			j = c;
+			tbl.appendChild(document.createElement('tr'));
+			while (j-- > 0)
+				document.querySelectorAll('tr')[i].appendChild(document.createElement('td'));
+		}
+		box = document.querySelectorAll('td');
+		//nth = box.length - 1;
+		for (let i = 0; i < box.length; i++) {
+			box[i].id = 'box' + i;
+			box[i].textContent = i;
+			box[i].onclick = clicked;
+		}
+	}	createG(row, col);
+
+	function clicked() {
+		let i = parseInt(this.id.substr(3));
+		let M = i % col + (row - 2) * col;
+		//if (box[M].style.backgroundColor == 'white') {
+			box[M].style.backgroundColor = 'red';
+		//}
+	}
+</script>
+</html>

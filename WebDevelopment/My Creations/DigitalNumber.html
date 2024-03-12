@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>Document</title>
+   <style media="screen">
+		body {
+			font-family: monospace;
+		}
+		table {
+			border-spacing: .5px;
+			
+		}
+		td {
+			border: 0.1px solid #AAA;
+			height: 8px;
+			width: 6.5px;
+			border-radius: 50%;
+		}
+   </style>
+</head>
+<body>
+	<table></table>
+	<p id='test'></p>
+</body>
+<script type="text/javascript">
+	let tbl = document.querySelector('table'), col = 70;
+	for (let i = 0, j; i < 15; i++) {
+		j = col;
+		tbl.appendChild(document.createElement('tr'));
+		while (j-- > 0)
+			document.querySelectorAll('tr')[i].appendChild(document.createElement('td'));
+	}
+	
+	let box = document.querySelectorAll('td'),
+		 alpha = {
+			A : [10,'07C','0FE','1FF','1C7','1C7','1C7','1FF','1FF','1FF','1C7','1C7','1C7','1C7'],
+			B : [10,'1FC','1FE','1FF','1C7','1C7','1FE','1FC','1FE','1C7','1C7','1FF','1FE','1FC'],
+			C : [11,'0FC','1FE','3FF','387','387','380','380','380','387','387','3FF','1FE','0FC'],
+			D : [11,'3FC','3FE','3FF','387','387','387','387','387','387','387','3FF','3FE','3FC'],
+			E : [10,'1FF','1FF','1FF','1C0','1C0','1FE','1FE','1FE','1C0','1C0','1FF','1FF','1FF'],
+			F : [10,'1FF','1FF','1FF','1C0','1C0','1FE','1FE','1FE','1C0','1C0','1C0','1C0','1C0'],
+			G : [11,'0FC','1FE','3FF','387','387','380','39F','39F','39F','387','3FF','1FE','0FC'],
+			H : [11,'387','387','387','387','387','3FF','3FF','3FF','387','387','387','387','387'],
+			I : [08,'07F','07F','07F','01C','01C','01C','01C','01C','01C','01C','07F','07F','07F'],
+			J : [10,'03F','03F','03F','007','007','007','007','007','007','1C7','1FF','0FE','07C'],
+			K : [10,'1C3','1C7','1CF','1DE','1FC','1F8','1F0','1F8','1FC','1DE','1CF','1C7','1C3'],
+			L : [10,'1C0','1C0','1C0','1C0','1C0','1C0','1C0','1C0','1C0','1C0','1FF','1FF','1FF'],
+			M : [12,'707','78F','7DF','7FF','7FF','777','727','707','707','707','707','707','707'],
+			N : [12,'707','787','7C7','7E7','7F7','7FF','7FF','7FF','77F','73F','71F','70F','707'],
+			O : [11,'0FC','1FE','3FF','387','387','387','387','387','387','387','3FF','1FE','0FC'],
+			P : [10,'1FC','1FE','1FF','1C7','1C7','1C7','1FF','1FE','1FC','1C0','1C0','1C0','1C0'],
+			Q : [11,'0FC','1FE','3FF','387','387','387','387','387','397','38F','3FF','1FE','0FD'],
+			R : [11,'3FC','3FE','3FF','387','387','387','3FF','3FE','3F8','3BC','39E','38F','387'],
+			S : [11,'0FE','1FF','3FF','380','380','3FC','1FE','0FF','007','007','3FF','3FE','1FC'],
+			T : [10,'1FF','1FF','1FF','038','038','038','038','038','038','038','038','038','038'],
+			U : [11,'387','387','387','387','387','387','387','387','387','387','3FF','1FE','0FC'],
+			V : [12,'707','707','707','707','707','707','78F','78F','3DE','3DE','1FC','1FC','0F8'],
+			W : [12,'707','707','707','707','707','707','727','777','7FF','7FF','7DF','78F','707'],
+			X : [11,'387','387','3CF','1CE','1FE','0FC','078','0FC','1FE','1CE','3CF','387','387'],
+			Y : [12,'707','707','38E','38E','1DC','1DC','0F8','0F8','070','070','070','070','070'],
+			Z : [11,'3FF','3FF','3FF','00F','01E','03C','078','0F0','1E0','3C0','3FF','3FF','3FF']
+		};
+
+	let txt = 'Pukhas', bin = Array(13).fill(''), len = 0;
+	
+	for (let i = 1; i < 14; i++) {
+		for (let j = 0; j < txt.length; j++) {
+			if (i == 1) len += alpha[txt[j]][0];
+			bin[i - 1] += (parseInt(alpha[txt[j]][i], 16).toString(2)).padStart(alpha[txt[j]][0], '0');
+		}
+	}
+	
+	
+	
+	document.getElementById('test').textContent = txt;
+	
+	setInterval( function() {
+		let itr = col;
+		for (let i = 0; i < bin.length; i++) {
+			for (let s = 0; s < len; itr++, s++) {
+				if (itr % col == len) itr += col - len; 
+				box[itr].style.background = (bin[i][s] === '1' ? 'PINK' : 'WHITE');
+
+			}
+			bin[i] = bin[i].slice(1) + bin[i].slice(0, 1);
+		}
+
+	}, 120);
+	
+	
+	/*function hex2bin(hex) {
+		 return (parseInt(hex, 16).toString(2)).padStart(40, '0');
+	}
+
+	function hex2bin(hex){
+		 return ("00000000" + (parseInt(hex, 16)).toString(2)).substr(-8);
+	}*/
+
+</script>
+</html>

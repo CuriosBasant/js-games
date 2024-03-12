@@ -1,0 +1,112 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+@font-face {
+  font-family: 'Material Icons';
+  src: url('./font/Material.ttf') format('truetype');
+}
+html {
+  font: 62.5% 'Segoe UI';
+}
+body {
+  width: 100vw;
+  height: 100vh;
+  background-color: #889;
+}
+
+body .material-icon {
+  all: unset;
+  font: 2em 'Material Icons';
+  cursor: pointer;
+}
+
+header {
+  position: relative;
+}
+header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: url('./images/slide_background.jpg');
+  background-position: center;
+  background-size: cover;
+  filter: blur(0.5rem);
+  z-index: -1;
+}
+#navigation-bar {
+  display: flex;
+  padding: 0 5em;
+  border-bottom: 1px solid #fff;
+}
+#navigation-bar h1 {
+  font: 3em 'Exotc350 bd bt';
+}
+#navigation-bar span {
+  flex: 1;
+}
+#navigation-bar nav div {
+  font-size: 1.25em;
+  display: inline-block;
+  padding: 1em;
+}
+#navigation-bar nav div a {
+  all: unset;
+}
+
+#slide-show {
+  height: 40rem;
+  display: flex;
+}
+#slide-show .slide {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(-50%, -50%);
+  filter: blur(0.2em);
+  width: 0;
+  box-shadow: 0 0 2rem #0004;
+}
+#slide-show .slide.right,
+#slide-show .slide.left {
+  width: 30rem;
+}
+#slide-show .slide.right {
+  left: 75%;
+}
+#slide-show .slide.active {
+  left: 50%;
+  filter: blur(0);
+  width: 50rem;
+  z-index: 1;
+}
+#slide-show .slide.left {
+  left: 25%;
+}
+#slide-show .slide.final {
+  left: -25%;
+}
+
+.slider {
+  -webkit-appearance: none;
+  height: var(--size, 10px);
+  width: 100%;
+  background: linear-gradient(to right, var(--theme-color, #f33) var(--val), transparent 0%),
+    linear-gradient(#666, #888 70%), transparent;
+  outline: none;
+  border-radius: var(--size);
+  margin: auto 0.4em;
+  cursor: pointer;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  pointer-events: none;
+  width: calc(var(--size) * 2);
+  height: calc(var(--size) * 2);
+  border-radius: 50%;
+  background: whitesmoke;
+}

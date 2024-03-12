@@ -1,0 +1,48 @@
+body {
+  background: #556;
+  text-align: center;
+}
+
+#board {
+  border-collapse: collapse;
+}
+
+#board td {
+  position: relative;
+  border: 1px solid;
+  padding: 20px;
+  -webkit-transform: skew(30deg, 10px);
+          transform: skew(30deg, 10px);
+}
+
+div {
+  position: relative;
+  display: inline-block;
+  padding: 40px;
+  border: 1px solid;
+  -webkit-animation: doSkew 2s ease-in-out infinite;
+          animation: doSkew 2s ease-in-out infinite;
+}
+
+@-webkit-keyframes doSkew {
+  from {
+    -webkit-transform: skewX(30deg);
+            transform: skewX(30deg);
+  }
+  to {
+    -webkit-transform: skewX(-30deg);
+            transform: skewX(-30deg);
+  }
+}
+
+@keyframes doSkew {
+  from {
+    -webkit-transform: skewX(30deg);
+            transform: skewX(30deg);
+  }
+  to {
+    -webkit-transform: skewX(-30deg);
+            transform: skewX(-30deg);
+  }
+}
+/*# sourceMappingURL=TriadStyle.css.map */

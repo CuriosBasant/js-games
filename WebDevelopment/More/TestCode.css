@@ -1,0 +1,7 @@
+.container{
+    display:table;
+    height: 100px;
+    width:15px;
+    border: 2px solid red;
+    color: palevioletred
+}	

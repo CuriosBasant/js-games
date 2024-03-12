@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		div {
+			position: relative;
+			top: 200px;
+			left: 40%;
+			transform-style: preserve-3d;
+			height: 100px;
+			width: 100px;
+			border: 1px solid;
+			transform: translateY(100px) rotateX(20deg);
+			perspective: 1000px;
+		}
+		div:before, div:after {
+			content: '';
+			position: relative;
+			display: block;
+			left: 51px;
+			top: -1px;
+			height: 100px;
+			width: 100px;
+			background: red;
+			border: 1px solid;
+			transform: rotateY(90deg);
+			
+		}
+		div:after {
+			left:-1px;
+			top: -155px;
+			transform: rotateX(90deg);
+		}
+	</style>
+</head>
+<body>
+	<div></div>
+</body>
+</html>

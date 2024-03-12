@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Pixel Art Creater</title>
+	<style>
+		body {
+			//background: #aafcff;
+		}
+		form {
+			margin: 20px auto;
+			text-align: center;
+		}
+		table {
+			margin: auto;
+			border-collapse: collapse;
+			border: 3px solid;
+		}
+		td {
+			background: white;
+			border: 1px solid;
+			height: 50px;
+			width: 50px;
+			text-align: center;
+		}
+		input[type='number'] {
+			width: 40px;
+			text-align: right;
+		}
+		label {
+		/	margin-left: 30px;
+		}
+		progress {
+			width: 70%;
+			height: 20px;
+			//color: blue;
+			background: yellow;
+		}
+		-webkit-progress-value{ background: red;}
+	</style>
+</head>
+<body onload="createGrid()">
+	<form>
+		<label for="row">Rows:</label>
+		<input type="number" value="8" id='row'>
+		<label for="col">Columns:</label>
+		<input type="number" value="8" id='col'>
+	</form>
+	<table></table>
+	<p id="test"></p>
+</body>
+<script>
+	
+		var tbl = document.querySelectorAll('table')[0];
+		tbl.innerHTML = '';
+	/* Create Grid */
+		var r = 8,
+			 c = 8;
+		for (i = 0; i < r; i++) { j = c;
+			tbl.appendChild(document.createElement('tr'));
+			while (j-- > 0)
+				document.querySelectorAll('tr')[i].appendChild(document.createElement('td'));
+		}
+	/* Let's Draw */
+		var box = document.querySelectorAll('td');
+		for (i = 0; i < box.length; i++) {
+			box[i].textContent = i;
+			box[i].onclick = clicked(i);
+		}
+		function clicked(i) { return function() {
+			box[i].style.background = 'red';
+		};	}
+/*
+	0	1	2
+	7		3
+	6	5	4
+*/
+
+	function rook(k) {
+		let path = [[],[],[],[]], boolNE = true, boolNW = true, boolSE = true, boolSW = true;
+		for (let i = 1, N, E, W, S; i < 8; i++) {
+			N = k - i * 8;
+			E = k + i;
+			W = k - i;
+			S = k + i * 8;
+			if (boolNW && N % 8 - k % 8 == 0)
+				path[0].push(N);
+			else boolNW = false;
+			if (boolNE && E % 8 != 0)
+				path[1].push(E);
+			else boolNE = false;
+			
+			if (boolSE && S % 8 - k % 8 == 0)
+				path[2].push(S);
+			else boolSE = false;
+			if (boolSW && W % 8 != 7)
+				path[3].push(W);
+			else boolSW = false;
+		}
+		for (let i = 0; i < path.length; i++) {
+			path[i] = path[i].filter(n => n >= 0 && n < 64);
+			//path[0][2] *= -1;
+			for (let j = 0; j < path[i].length; j++) {
+				if (path[i][j] < 0) break;
+				box[path[i][j]].style.background = "yellow";
+			}
+		}
+		document.getElementById("test").innerHTML = path;
+	}
+	
+	function queen(k) {
+		let path = [[],[],[],[],[],[],[],[]], bool = [true,true,true,true,true,true,true,true];
+		for (let i = 1, N, E, W, S; i < 8; i++) {
+			N = k - i * 8;
+			NE = k - i * 7;
+			E = k + i;
+			SE = k + i * 7;
+			S = k + i * 8;
+			SW = k + i * 9;
+			W = k - i;
+			NW = k - i * 9;
+			if (bool[0] && N % 8 - k % 8 == 0)
+				path[0].push(N);
+			else bool[0] = false;
+			if (bool[1] && NW % 8 != 7)
+				path[1].push(NW);
+			else bool[1] = false;
+			if (bool[2] && E % 8 != 0)
+				path[2].push(E);
+			else bool[2] = false;
+			if (bool[3] && SE % 8 != 7)
+				path[3].push(SE);
+			else bool[3] = false;
+			if (bool[4] && S % 8 - k % 8 == 0)
+				path[4].push(S);
+			else bool[4] = false;
+			if (bool[5] && SW % 8 != 0)
+				path[5].push(SW);
+			else bool[5] = false;
+			if (bool[6] && W % 8 != 7)
+				path[6].push(W);
+			else bool[6] = false;
+			if (bool[7] && NE % 8 != 0)
+				path[7].push(NE);
+			else bool[7] = false;
+		}
+		for (let i = 0; i < path.length; i++) {
+			path[i] = path[i].filter(n => n >= 0 && n < 64);
+			//path[0][2] *= -1;
+			for (let j = 0; j < path[i].length; j++) {
+				if (path[i][j] < 0) break;
+				box[path[i][j]].style.background = "yellow";
+			}
+		}
+		document.getElementById("test").innerHTML = path;
+	}
+	
+	function bishop(k) {
+		let path = [[],[],[],[]], boolNE = true, boolNW = true, boolSE = true, boolSW = true;
+		for (let i = 1, NW, NE, SE, SW; i < 8; i++) {
+			NW = k - i * 9;
+			NE = k - i * 7;
+			SE = k + i * 7;
+			SW = k + i * 9;
+			if (boolNW && NW % 8 != 7)
+				path[0].push(NW);
+			else boolNW = false;
+			if (boolNE && NE % 8 != 0)
+				path[1].push(NE);
+			else boolNE = false;
+			
+			if (boolSE && SE % 8 != 7)
+				path[2].push(SE);
+			else boolSE = false;
+			if (boolSW && SW % 8 != 0)
+				path[3].push(SW);
+			else boolSW = false;
+		}
+		for (let i = 0; i < path.length; i++) {
+			path[i] = path[i].filter(n => n >= 0 && n < 64);
+			path[0][2] *= -1;
+			for (let j = 0; j < path[i].length; j++) {
+				if (path[i][j] < 0) break;
+				box[path[i][j]].style.background = "yellow";
+			}
+		}
+		document.getElementById("test").innerHTML = path;
+	}
+	
+	function king(k) {
+		let path = [-9, -8, -7, 1, 9, 8, 7, -1];
+		if (k < 8) 			path[0] = path[1] = path[2] = 0;	// TOP
+		if (k % 8 == 0)	path[0] = path[7] = path[6] = 0;	// LEFT
+		if (k % 8 == 7)	path[2] = path[3] = path[4] = 0;	// RIGHT
+		if (k > 55)			path[6] = path[5] = path[4] = 0;	// BOTTOM
+		for (let i = 0; i < path.length; i++) {
+			if (path[i])
+				box[k + path[i]].style.background = "yellow";
+			
+		}
+	}
+</script>
+</html>

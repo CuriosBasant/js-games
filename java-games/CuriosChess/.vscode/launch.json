@@ -1,0 +1,19 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - App",
+      "request": "launch",
+      "mainClass": "app.App",
+      "projectName": "CuriosChess"
+    },
+    {
+      "type": "java",
+      "name": "Run JavaFX",
+      "request": "launch",
+      "vmArgs": "--module-path %PATH_TO_FX% --add-modules javafx.controls,javafx.fxml",
+      "mainClass": "app.CreateBoard",
+      "projectName": "CuriosChess"
+    }
+  ]
+}

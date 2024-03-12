@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		#fan {
+			position: absolute;
+			top: 30%;  left: 50%;
+			font-size: 2em;
+			transform-style: preserve-3d;
+			transform: rotateY(-30deg) rotateZ(0deg);
+			transform-origin: 0 5em;
+			animation: spin 2s linear infinite;
+			
+		}
+		#fan * {
+			position: absolute;
+			/transform: translate(-50%,-50%);
+			height: 10em;	
+			width: 1em;
+			border: 1px solid;
+			border-radius: 2em/20em;
+			background: rgba(200,200,200,.8);
+
+				
+		}
+		#blade2 {
+			transform: rotateX(60deg);
+		}
+		#blade3 {
+			transform: rotateX(-60deg);
+		}
+		@keyframes spin {
+			from{ transform: rotateY(-20deg) rotateX(0deg) }
+			to{ transform: rotateY(-20deg)rotateX(360deg) }
+		}
+		.semi {
+			position: relative;
+			width: 40px;
+			height: 20px;
+			background: red;
+			border-radius: 0 0 20px 20px;
+		}
+	</style>
+</head>
+<body>
+	<div class='semi'></div>
+	<div id='fan'>
+		<div id='blade1'></div>
+		<div id='blade2'></div>
+		<div id='blade3'></div>
+	</div>
+</body>
+</html>

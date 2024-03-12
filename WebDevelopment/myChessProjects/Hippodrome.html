@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Hippodrome</title>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		html {
+			--darkColor : #56f2ff;
+			--lightColor : lightyellow;
+			--lightGrey : #151515;
+		}
+		body {
+			display: flex;
+			background: #445;
+			font-family: 'Segoe UI';
+		}
+		#main-container {
+			display: inline-flex;
+			flex-direction: column;
+			position: relative;
+			font-size: 20px;
+			margin: 2em auto;
+			padding: .8em;
+			border-radius: .2em;
+			box-shadow: 0 0 1.4em rgba(0, 0, 15, 0.5);
+			background: rgba(255, 255, 255, 0.85); }
+			nav {
+				display: flex;
+				justify-content: space-between;
+				margin-bottom: 0.6em;
+				padding: .4em;
+				border-radius: .2em;
+				background: #445; }
+				nav > button {
+					border-radius: 50%;
+					border: .02em solid;
+					padding: 0 .5em; }
+				nav > button:first-child {
+					font-size: 1.2em;
+					line-height: 0;
+					padding: 0 .14em; }
+				#show-move {
+					padding: 0 .8em;
+					border-radius: .2em;
+					background: rgba(255, 255, 255, 0.85); }
+				span.win {
+					color: #0A0;
+					padding: 0 .4em !important }
+
+		#b-contain {
+			position: relative;
+			display: inline-flex;
+			overflow: hidden;
+			overflow-y: auto }
+			#board {
+				position: sticky;
+				top: 0;
+				margin: auto;
+				border-spacing: 0;
+				border: .15em solid var(--lightGrey); }
+				td {
+					color: var(--lightGrey);
+					text-align: center;
+					font-size: 50px;
+					border: 1px solid var(--lightGrey);
+					background: var(--lightColor); }
+				.invalid { display: none }
+				tr:nth-child(even) td:nth-child(even),
+				tr:nth-child(odd) td:nth-child(odd) {
+					background: var(--darkColor) }
+			#board:hover { cursor: pointer }
+
+			#b-contain div {
+				display: none;
+				position: absolute;
+				font-size: .75em;
+				flex-direction: column;
+				color: white;
+				padding: 1.2em;
+				background: rgba(0, 0, 20, 0.8);
+				text-align: justify; }
+				#b-contain h2 {
+					margin-bottom: .8em }
+				#congo * {
+					text-align: center }
+					#congo h1 {
+						font-size: 5em }
+					#congo button {
+						display: block;
+						padding: .4em 1em;
+						margin: 1.5em auto 0 }
+
+		::-webkit-scrollbar {
+			width: 0;
+		}
+	</style>
+</head>
+<body>
+	<div id="main-container">
+		<nav>
+			<button onclick="shuffle()">&#8766;</button>
+			<span id="show-move">0</span>
+			<button onclick="$('#intro').toggle()">&#x2754;</button>
+		</nav>
+		<div id="b-contain">
+			<table id='board'></table>
+			<div id="intro">
+				<h2>How to Play!</h2>
+				<p>The main actors here, are the four Knights. All of them are putted in a line at the edge row of the 4&times;4 square board. The remaining 12 figures with having no pawns are placed randomly within this 4&times;4 square board.<br>Next, one of the 12 pieces has been removed randomly (but not a Knight) and the goal is to move all the four Knights to the other, opposite edge-row.<br>Knights jump as usual. There is no check or capturing and all the pieces move according to the chess rules utilizing only one empty space on the whole board.</p>
+			</div>
+			<div id="congo">
+				<h2>Congratulations!</h2>
+				<p>You have completed the Puzzle in</p>
+				<h1>33</h1>
+				<p>Moves</p>
+				<button onclick="playAgain()">Play Again</button>
+			</div>
+		</div>
+
+	</div>	
+	
+	<script src="../JS-Modules/jQuery.js"></script>
+	<script>
+	$(document).ready( function () {
+		const ROW = 8, COL = 6,
+			PATH = {
+				R : [-COL, -1, 1, COL],
+				B : [-1-COL, 1-COL, COL-1, COL+1],
+				get N() {
+					const arr = [COL-2, COL+2, COL*2-1, COL*2+1];
+					return [...arr, ...arr.map(n => -n)];
+				},
+				get Q() { return [...this.B, ...this.R]; },
+				get K() { return this.Q; }
+			};
+		$(board).html(`<tr>${'<td></td>'.repeat(COL)}</tr>`.repeat(ROW));
+		let sqr = $('#board td');
+
+		for(let i = 0; i < ROW * COL; i++) {
+			if ([0,1,6,7].includes(i / COL | 0) || [0,5].includes(i % COL)) {
+				$(sqr[i]).addClass('invalid'); // $(sqr[i]).text(i);
+			}
+		}
+		shuffle();
+
+		$('td:not(.invalid)').width($('td:not(.invalid)').height());
+
+		sqr.click( function () {
+			const i = sqr.index(this),
+				P = 'NBRQK'['♞♝♜♛♚'.indexOf($(this).text())];
+			let moveTo = PATH[P].map(n => n + i).filter(n => !sqr.eq(n).hasClass('invalid') && !sqr.eq(n).text())[0];
+			// console.log(moveTo);
+			if (!moveTo) return;
+			$('#show-move').text(+$('#show-move').text() + 1);
+			sqr.eq(moveTo).text($(this).text());
+			$(this).text('');
+
+			// When a Win Condition is Met!
+			if ($('tr:nth-child(6) td').text() == '♞♞♞♞') {
+				// $('tr:nth-child(6) td').css('background','radial-gradient(white 20%,#6f6)');
+				let winPanel = $('#congo'), clicks = $('#show-move');
+				$('#congo h1').text(clicks.text());
+				clicks.text('Win!').addClass('win');
+				winPanel.width($('#intro').width());
+				winPanel.innerHeight($('#board').outerHeight());
+				winPanel.show(700);
+			}
+
+		});
+		
+	});
+
+	function playAgain() {
+		// $('tr:nth-child(6) td').css('background','transparent');
+		$('#congo').hide(500);
+		$('#show-move').text('0');
+		$('#show-move').removeClass('win');
+		shuffle();
+	}
+
+	function shuffle() {
+		$('#show-move').text('0');
+		let piece = '♝♝♝♝♜♜♜♜♛♛♚♚', valid = $('#board td:not(.invalid)').empty();
+		for (let i = 0, r; i < 16; i++) {
+			if (piece) {
+				r = Math.random() * piece.length | 0;
+				valid.eq(i).text(piece[r]);
+				piece = piece.substr(0, r) + piece.substr(r + 1);
+			}
+			else valid.eq(i).text('♞');
+		}
+		valid.eq(Math.random() * 12 | 0).empty();
+	}
+
+	</script>
+</body>
+</html>

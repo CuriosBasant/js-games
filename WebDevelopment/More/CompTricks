@@ -1,0 +1,81 @@
+%windir%\system32\drivers\
+netsh wlan show profile (wifi-name) key=clear  //key content wala passw0rd h
+ipconfig/all
+
+When using the shorthand property the order of the property values is:
+
+		background: -color  -image  -repeat  -attachment(fixed/scroll)  -position;
+
+The font property is a shorthand for the following properties:
+
+		font: -style(italic)  -variant(capitalize)  -weight(bold)  -size/line-height  -family;
+
+For list-style properties:
+		list-style: -type  -position  -image;
+
+
+Property				Description
+border-image			A shorthand property for setting all the border-image-* properties
+border-image-source		Specifies the path to the image to be used as a border
+border-image-slice		Specifies how to slice the border image
+border-image-width		Specifies the widths of the border image
+border-image-outset		Specifies the amount by which the border image area extends beyond the border box
+border-image-repeat		Specifies whether the border image should be repeated, rounded or stretched
+
+
+	animation-name: example;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-delay: 2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+
+
+   GAMES:
+1. just cause 1 and 2
+2. prototype 1 and 2
+3. max payne 3
+4. assassin's creed
+5. deadpool
+6. total overdose
+7. project igi 1 and 2
+8. conflict desert storm
+9. gta vc
+10 left for dead 1 and 2
+11 prince of persia the forgotten sand
+12 burnout paradise
+13 splinter cell blacklist
+14 sleeping dogs
+
+City Building Games
+1. City Skylines            (changing: 20480    24300)
+2. Surviving Mars 
+
+<script>
+    window.onload = function() {  // reload file every second
+        setInterval(function() { location.reload(); } , 1000);
+    };
+</script>
+
+
+/* Fonts */
+Abel
+Acme
+Aladin
+Aldrich
+Allerta Stencil
+Arbutus
+Archivo Narrow
+Wallpoet
+Rajdhani
+Oswald
+Orbitron
+Offside
+Mina
+Metal Mania
+Merienda
+Megrim
+Medula One
+Marmelad
+Kenia
+Kelly Slab

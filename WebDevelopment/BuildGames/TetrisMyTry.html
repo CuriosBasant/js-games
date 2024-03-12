@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Tetris</title>
+	<style>
+		h1 {
+			text-align: center;
+		}
+		table {
+			margin: auto;
+			border: 2px solid;
+			border-collapse: collapse;
+		}
+		td {
+			border: 1px solid;
+			height: 30px;
+			width: 30px;
+			background: white;
+		}
+		#remote {
+			margin: auto;
+			display: table;
+			padding: 20px;
+		}
+		button {
+			font-size: 25px;
+			border: 1px solid;
+			border-radius: 50%;
+			padding: 6px 8px 8px;
+			margin: 0 8px;
+			line-height: 25px;
+		}
+	</style>
+</head>
+<body>
+	<h1>TETRIS</h1>
+	<table></table>
+	<div id='remote'>
+		<button>&larr;</button>
+		<button>&rarr;</button>
+	</div>
+</body>
+<script>
+	var row = 16, col = 13, p = 0,
+		 btn = document.querySelectorAll('button');
+	for (var i = 0; i < btn.length; i++){
+		btn[i].onclick = move(i);
+	}
+	function move(i) { return function() {
+		switch (i) {
+			case 0: p--; break;
+			case 1: p++; break;
+		}
+	}; }
+	createG(row, col);
+	function createG(r, c) {
+		var tbl = document.querySelectorAll('table')[0];
+		tbl.innerHTML = '';
+		for (var i = 0, j; i < r; i++) { j = c;
+			tbl.appendChild(document.createElement('tr'));
+			while (j-- > 0)
+				document.querySelectorAll('tr')[i].appendChild(document.createElement('td'));
+		}
+		box = document.querySelectorAll('td');
+		nth = box.length - 1;
+	}
+	var blocks = ['111100','110110','010111','100111','001111','011110','110011'], //IOTLFSZ
+		 b = 0, B = Math.floor(Math.random() * blocks.length);
+	var loop = setInterval(function() {
+		var bool = true;
+		for (var i = 0, k = 5; i < 6; i++) {
+			if (B) k = i < 3 ? 5 : col + 2;
+			if (parseInt(blocks[B][i]))
+				if (bool)
+					box[i + k + p + col * b].style.background = 'white';
+				else
+					box[i + k + p + col * (b+1)].style.background = 'red';
+			if (i == 5 && bool) { i = -1; bool = !bool; }
+		}
+		if (++b > row - 3) clearInterval(loop);
+	}, 900);
+	
+
+</script>
+</html>

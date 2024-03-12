@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Puzzle Game</title>
+	<style>
+		* { outline: none; }
+		body {
+			background: grey;
+		}
+		section {
+			display: table;
+			margin: 60px auto;
+			background: blue
+		}
+		table {
+			border: 10px solid #333;
+			border-top-width: 50px;
+			padding: 4px;
+			box-shadow: inset 0 0 4px 2px #222;
+			background: #333;
+		}
+		
+		td {
+			border: 1px solid #222;
+			border-radius: 5px;
+			padding: 12px 0;
+			width: 56px;
+			background: linear-gradient(#222, #333, #666);
+			text-align: center;
+			font: 28px 'Franklin Gothic Heavy';
+			color: white;
+			cursor: pointer;
+		}
+		#head {
+			position: relative;
+			top: 40px;
+			left: 12px;
+			width: 100%;
+		}
+		span {
+			/position: absolute;
+			/top: 160px; 
+			/left: 30%;
+			color: white;
+		}
+		#shuffleButton {
+			padding: 0px;
+			position: relative;
+			/top: 40px;
+			left: calc(100% - 125px);
+			line-height: 25px;
+			border: 1px solid;
+			border-radius: 50px;
+			width: 28px;
+			font-size: 18px;
+		}
+	</style>
+</head>
+<body>
+	<p>Press the '⌘↹' button to Shuffle the Blocks!</p>
+	<section>
+		<div id="head">
+			<span>Level 1</span>
+			<button id='shuffleButton'>⌘</button>
+		</div>
+		<table></table>
+	</section>
+</body>
+<script>
+	var row = 5, col = 5, level = 1, move = 0,
+	    bool = true,
+		 btn = document.getElementById('shuffleButton');
+	
+	createArena(row, col);
+	btn.onclick = function() {
+		bool ? shuffleBlocks() : shuffleBlocks.stop();
+		bool = !bool;
+	};
+	function createArena(r, c) {
+		var tbl = document.querySelectorAll('table')[0];
+		tbl.innerHTML = '';
+		//btn.style.left = ((col - 2) * 60 + 10) + 'px';
+		for (let i = 0, j; i < r; i++) { j = c;
+			tbl.appendChild(document.createElement('tr'));
+			while (j-- > 0)
+				document.querySelectorAll('tr')[i].appendChild(document.createElement('td'));
+		}
+		box = document.querySelectorAll('td');
+		p = nth = box.length - 1;
+		for (let i = 0; i <= nth;) {
+			box[i].onclick = clicked(i);
+			box[i].innerHTML = ++i;
+		}
+	}
+	function clicked(i) { return function() {
+		play(i);
+		if (box[nth].style.visibility == 'hidden') check(box);
+	};	}
+	
+	function play(k) {
+		var gap = [-col, -1, 1, col];
+		if (k < col) 				gap[0] = 0;
+		if (k % col == 0) 		gap[1] = 0;
+		if (k % col == col - 1) gap[2] = 0;
+		for (let i = 0; i < 4; i++)
+			if (box[k + gap[i]].style.visibility == 'hidden') {
+				box[k + gap[i]].innerHTML = box[k].innerHTML;
+				box[k + gap[i]].style.visibility = 'visible';
+				box[k].style.visibility = 'hidden';
+				if(bool) document.querySelectorAll('span')[0].innerHTML = 'Moves: ' + ++move;				
+				break;
+			}
+	}
+	
+	function shuffleBlocks() {
+		if (p == nth) box[p].style.visibility = 'hidden';
+		btn.style.background = 'skyblue';
+		var H, X, h, x;
+		move = 0; h = x = true;
+		var loop = setInterval(function() {
+			var notSide = false;			
+			H = Math.random() > 0.5;
+			if (H) {		//swap vertically
+				if (p > (row-1)*col-1)	p -= col;	//BOTTOM
+				else 	if (p < col) 		p += col;	//TOP
+						else notSide = true;
+			}	
+			else {	//swap horizotally
+				if (p % col == col - 1) p--;	//RIGHT
+				else 	if (p % col == 0) p++; 	//LEFT		
+						else notSide = true;
+			}
+			if (notSide) { // if the gap is not at the sides
+				if (H == h) X = x;
+				else X = Math.random() > 0.5;
+				//X = (H == h) ? x : Math.random() > 0.5;
+				if (!H) p += (X ? 1 : -1);
+				else p += (X ? col : -col);
+				
+				h = H; x = X;
+			}
+			
+			if (p >= 0 && p < row * col) play(p); else alert("oh yeah!");
+			function stop() {
+				btn.style.background = 'white';
+				clearInterval(loop);
+			}	shuffleBlocks.stop = stop;
+		}, 500);
+	}
+	
+	function check(arr) {
+		var i = 0;
+		while (i < nth)
+			if (arr[i].innerHTML == ++i) continue; else break;
+		if (i == nth) {
+			box[nth].style.visibility = 'visible';
+			box[nth].innerHTML = row * col;
+			p = nth;
+			++level % 2 ? ++row : ++col;
+			alert("Congratulations!\nYou have completed the Puzzle in " + move + " Moves, and are Advanced to Level " + level);
+			createArena(row, col);
+		}
+	}
+</script>
+</html>

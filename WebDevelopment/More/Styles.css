@@ -1,0 +1,41 @@
+body{
+    background-color: cyan;
+}
+.box{
+    width:630px;
+    padding: 24px;
+    background-color: skyblue;
+    text-align: center;
+}
+.cloud{
+    position: absolute;
+    animation-name: go;
+    animation-duration: 5s;
+}
+.circle{
+    width:150px;
+    height: 150px;
+    padding-top: 0px ;
+    color:white;
+    font-size: 19px;
+    line-height: 7.8;
+    margin:20px auto;
+    background: red;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 1s;
+    animation-name: go;
+    animation-duration: 4s;
+    position: absolute;
+}
+
+.circle:hover{
+    background: white;
+    color:black;
+    transform: rotate(360deg);
+}
+
+@keyframes go{
+    from{ transform: translate(0) rotate(0deg);}
+    to{ transform: translate(400px) rotate(360deg);}
+}

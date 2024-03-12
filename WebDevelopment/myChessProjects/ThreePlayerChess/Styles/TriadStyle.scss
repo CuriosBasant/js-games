@@ -1,0 +1,25 @@
+body {
+	background: #556;
+	text-align: center;
+}
+#board {
+	border-collapse: collapse;
+	td {
+		position: relative;
+		border: 1px solid;
+		padding: 20px;
+		transform: skew(30deg, 10px);
+	}
+}
+div {
+	position: relative;
+	display: inline-block;
+	padding: 40px;
+	border: 1px solid;
+	animation: doSkew 2s ease-in-out infinite;
+}
+@keyframes doSkew {
+	from { transform: skewX(30deg); }
+	to { transform: skewX(-30deg); }
+
+}

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Calculator</title>
+	<style>
+		html, body { height: 100% }
+		body { 
+			display: flex;
+			background: #eef;
+			margin: 0;
+		}
+		body * { outline: none }
+		#container {
+			margin: auto;
+		}
+		table {
+			background: #ddd;
+			border: 2px solid #aaa;
+			padding: 4px;
+			border-spacing: 8px;
+			border-radius: 10px;
+		}
+		table th {
+			background: #d1fdff;
+			box-shadow: inset 0 0 90px #37bed0;
+			text-align: right;
+			padding: 30px 15px;
+			font: 40px Cambria;
+			border: 6px inset white;
+		}
+		
+		table td {
+			padding: 12px 0;
+			min-width: 75px;
+			text-align: center;
+			background: #666;
+			color: white;
+			font: 25px sans-serif;
+			box-shadow: 1px 3px #777;
+			transform: translateY(-3px);
+			border-radius: 8px;
+			transition: .3s;
+		}
+		tr:nth-child(2) td:first-child {
+			line-height: 0;
+			background: #f33;
+			box-shadow: 1px 3px #c33;
+		}
+		td:active {
+			box-shadow: 0px 1px grey;
+			transform: translate(0, -.5px);
+		}
+		td:hover {
+			cursor: pointer;
+			background: blue;
+		}
+		#eqn {
+			position: absolute;
+			padding: 12px 35px;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="container">
+		<p id="eqn"></p>
+		<table>
+			<tr><th colspan="4" id="view">ON</th></tr>
+			<tr>
+				<td>&cross;</td>
+				<td>!</td>
+				<td>&#8730;</td>
+				<td>&larr;</td>
+			</tr>
+			<tr>
+				<td>%</td>
+				<td>^</td>
+				<td>&divide;</td>
+				<td>&times;</td>
+			</tr>
+			<tr>
+				<td>7</td>
+				<td>8</td>
+				<td>9</td>
+				<td>&minus;</td>
+			</tr>
+			<tr>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+				<td>&plus;</td>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>2</td>
+				<td>3</td>
+				<td rowspan="2">=</td>
+			</tr>
+			<tr>
+				<td>&plusmn;</td>
+				<td>0</td>
+				<td>.</td>
+			</tr>
+		</table>
+	</div>
+</body>
+<script>
+	var tableData = document.querySelectorAll("td"),
+		 result = document.getElementById('view');
+	
+	for(var i = 0; i < tableData.length; i++) {
+		if (! isNaN(tableData[i].textContent))
+			tableData[i].style.fontWeight = "bold";
+		
+		tableData[i].addEventListener("click", display(i));
+	}
+	
+	function display(i) { return () => {
+		if ( result.textContent == 'ON' || result.textContent == '0' )
+			result.innerHTML = '';
+		
+		switch ( tableData[i].textContent ) {
+			case '=':
+				result.textContent = +calc(result.textContent).toFixed(4);
+				break;
+			case '←':
+				result.textContent = result.textContent.slice(0, -1);
+				if ( result.textContent.length == 0 )
+					result.textContent = '0';
+				break;
+			case '✗':
+				result.textContent = 'ON';
+				break;
+			default: result.textContent += tableData[i].textContent;
+		}
+	}; }
+	
+	function calc(exp) {
+		var num = new Array(2).fill(''), op;
+		document.getElementById('eqn').textContent = exp + '=';
+		
+		for (var i = 0, j = 0; i < exp.length; i++) {
+			if(isNaN(exp[i]) && exp[i] != '.') {
+				op = exp[i];
+				j++;
+			}
+			else num[j] += exp[i];
+		}
+		
+		num[0] = parseFloat(num[0]);
+		num[1] = parseFloat(num[1]);
+		
+		switch ( op ) {
+			case '+': return num[0] + num[1];
+			case '−': return num[0] - num[1];
+			case '×': return num[0] * num[1];
+			case '÷': return num[0] / num[1];
+			case '%': return num[0] % num[1];
+			case '±': return num[0] * (-1);
+			case '√': return Math.sqrt(num[1]);
+			case '^': return Math.pow(num[0], num[1]);
+			case '←': return 'hello';
+			case '!': num[1] = 1;
+				while (num[0] > 0) num[1] *= num[0]--;
+				return num[1];
+			default: return "Error...";
+				
+		}
+	}
+	
+	/* Alternative
+		(function(index) {
+			tableData[index].addEventListener("click", function() {
+				alert("you clicked region number " + index);
+				document.getElementById('view').innerHTML = tableData[index].textContent;
+			})
+		})(i);*/
+</script>
+</html>

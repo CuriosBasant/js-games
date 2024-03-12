@@ -1,0 +1,353 @@
+/* This Style Sheet is Generated from SASS Compiler */
+
+html {
+	--lightColor : lightyellow;
+	--darkColor : #56f2ff;
+	--transGrey : #001A;
+}
+
+* {
+	outline: none;
+	margin: 0;
+	padding: 0;
+	font-family: 'Segoe UI';
+/*	user-select: none;*/
+}
+#test { margin: 0; color: red; font-size: 12px; }
+body {
+	display: flex;
+	counter-reset: num 9 abc;
+	text-align: center;
+	background: linear-gradient(to right,#60f8ec,#e282d7,#60f8ec,#e282d7);
+	overflow: hidden;
+	overflow-y: auto; }
+	body::-webkit-scrollbar {
+		width: 3px;
+	}
+	#container {
+		display: inline-flex;
+		flex-direction: column;
+		font-size: 16px;
+		position: relative;
+		margin: auto;
+		padding: 1em;
+		background: #FFF9; }
+
+
+#movelist {
+	display: flex;
+	background: var(--transGrey);
+	padding: .5em 0 .3em;
+	border: 0 solid transparent;
+	border-width: 0 .5em;
+/*	margin: .4em 0;*/
+	height: 2.1em;
+	width: 28.1em;
+	white-space: nowrap;
+	overflow: hidden;
+	overflow-x: scroll;
+	scroll-behavior: smooth; }
+	#movelist :first-child { display: none }
+	#movelist span {
+		font-size: .7em;
+		padding: 0 .6em;
+		color: var(--lightColor);
+		border-radius: .4em;
+		letter-spacing: .1em;
+		transition: .3s;}
+	#movelist span:hover {
+		background: #0008; }
+	.highlight { background: #FFF3 }
+	#movelist::-webkit-scrollbar {
+		height: 4px;
+		background: transparent; }
+	#movelist::-webkit-scrollbar-thumb {
+		background: var(--transGrey); }
+	#movelist.custom {
+		display: block;
+		font-size: 1.3em;
+		font-weight: bold;
+		color: white;
+		width: auto;
+		height: auto;
+		text-align: center;
+		padding: .2em;
+		margin-bottom: 1em;
+	}
+	#movelist.custom:before {
+		content: 'Custom Setup';
+		letter-spacing: .03em;
+	}
+
+.contain-3.custom {
+	display: none;
+}
+.contain-3 {
+	display: flex;
+	margin: .3em 0;
+	background: #bbb;
+	font-size: 1.6em; }
+	.player-avatar {
+		background: var(--lightColor);
+		width: 1.65em;
+		text-align: center;
+		border: .04em solid var(--transGrey); }
+	.divide-2 {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		text-align: left;
+		font-size: .554em; }
+		.player-name {
+			letter-spacing: .04em;
+			padding-left: .5em; }
+		.captured {
+			padding: 0 .6em;
+			margin: 0;
+			letter-spacing: -1ch; }
+	
+	/*.timer {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+		background: var(--transGrey);
+		border-radius: .5em; }*/
+.timer {
+	background: grey;
+	padding: 0 .35em;
+	border-radius: .3em;
+}
+	.turn {
+		background: white;
+		font-weight: bold; }
+
+#boardContainer {
+	position: relative;
+	display: inline-flex; }
+#boardContainer > :not(#board) {
+		position: absolute;
+/*		font-size: .9em;*/
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		text-align: center;
+		box-shadow: 0 0 2em #444;
+		border-radius: .8em;
+		background: #FFFD; }
+	#boardContainer div#transparent-panel {
+		height: 100%;
+		width: 100%;
+		border-radius: 0;
+		box-shadow: 0 0;
+		background: #0003; }
+	#start-game {
+		display: flex;
+		flex-direction: column;
+		padding: 1.2em; }
+		#start-game > div {
+			display: flex;
+			font-size: .9em;
+			margin: .4em 0; }
+		#start-game div:first-child { width: 18em; }
+
+		.select-avatar {
+			font-size: 1.5em;
+			width: 1.56em;
+			margin-right: .5em; }
+		input[type='text'] {
+			padding: 0 .5em;
+			border: 0;
+			border-bottom: .05em solid #445; }
+
+		#start-game div:first-child ~ div label {
+			font-size: .92em;
+		}
+		#set-time-contain {
+			display: block !important;
+			padding-top: 1em;
+			text-align: right;
+			font-size: .7em;
+/*			background: red;*/ }
+		#to-set-time {
+			vertical-align: middle;
+		}
+		input { flex: 1 }
+		input[type='range'] + span {
+			display: none;
+			font-size: .9em;
+			margin-left: 0.3em; }
+/*		Styling the Range Input*/
+		input[type=range] {
+			-webkit-appearance: none;
+			background: transparent;
+			outline: none; }
+		input[type=range]::-webkit-slider-runnable-track {
+			height: .5em;
+			background: #999;
+			border-radius: .5em; }
+		.run-track::-webkit-slider-runnable-track {
+			background-color: #0cf !important; }
+		input[type=range]::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			display: none;
+			border: .01em solid #777;
+			height: 1.2em;
+			width: 1.2em;
+			transform: translateY(-.35em);
+			border-radius: 50%;
+			background: white;
+			cursor: pointer; }
+		.run-thumb::-webkit-slider-thumb {
+			display: block !important; }
+
+		#start-btn {
+			padding: .3em;
+			margin: 0.5em 0 0;
+			font-size: 1.2em;
+			font-weight: bold;
+			letter-spacing: .04em;
+			border: 0;
+			color: white;
+			background: var(--transGrey); }
+			#start-btn:hover {
+				color: black;
+				box-shadow: inset 0 0 .8em #0cf;
+				background: var(--darkColor); }
+		
+	#promotion-dialog {
+		flex-direction: column; }
+		#promotion-dialog p {
+			font-size: 1.2em;
+			padding: .3em;
+			border-bottom: .1em solid;
+			letter-spacing: .05em; }
+		#promotion-dialog div {
+			display: flex;
+			padding: 0 .3em; }
+		#promotion-dialog span {
+			font-size: 3em;
+			transition: .1s; }
+			#promotion-dialog span:hover {
+				transform: scale(1.2); }
+		
+	#game-over {
+		padding: 1em 1.5em; }
+		#game-over span {
+			font-size: 1.2em;
+			font-weight: bold; }
+		#game-over p { margin-top: .6em }
+	
+
+#board {
+	border-collapse: collapse;
+	transition: 1s; }
+	#board:hover { cursor: grab }
+	td {
+		font-size: 2.3em;
+		text-align: center;
+	}
+	tr:first-child td:first-child { font-size: 0; }
+	td:not(.invalid) {
+		height: 1.5em;
+		width: 1.5em;
+		box-shadow: inset 0 0 .1em .03em #0005;
+		background: var(--lightColor) /*url("square/paper_W.bmp")*/;
+		transition: transform .9s;
+		z-index: -1; }
+	td:active { cursor: grabbing }
+	td.invalid {
+		height: .05em;
+		width: .1em;
+		background: var(--transGrey);
+	}
+	td.custom {
+		background: #eef;
+		box-shadow: inset 0 0 0 .1em #eef;
+	}
+	td.custom:nth-child(-n+7):hover {
+		border-radius: .2em;
+		background: #ddea;
+	}
+/*td.custom:nth-child(-n+7):active {
+		background: red;
+	
+}*/
+	tr:not(:last-child) td.custom {
+		border-top: .1em solid var(--transGrey);
+		
+	}
+	td.custom:nth-last-child(-n+3) > * {
+		font-size: .8em;
+		border: 0;
+		width: 80%;
+		border-radius: .1em;
+		background: var(--darkColor);
+	}
+		
+/*	tr:first-child td, tr:last-child td { padding: .1em 0 }*/
+	
+	/* Creating Checkboard */
+	tr:nth-child(even) td:nth-child(even):not(.invalid),
+	tr:nth-child(odd) td:nth-child(odd):not(.invalid)
+	{ background: var(--darkColor) /*url("square/paper_B.bmp")*/}
+
+
+.btn:hover {
+	background: #0005;
+	color: var(--darkColor); }
+	
+/* Co-ordinates */
+/*
+._123:after, ._abc:after {
+	position: relative;
+	display: block;
+	color: var(--lightColor);
+	font-size: .7em;
+	font-weight: bold;
+	text-shadow: 0 0 .1em black;
+	top: -1.9em;	left: .3em;
+	z-index: 1;
+}
+._123:after {
+	content: counter(num);
+	counter-increment: num -1;
+}
+._abc:after {
+	top: -.8em;		left: 1.4em;
+	content: counter(abc, lower-alpha) ;
+	counter-increment: abc;
+}
+tr:nth-child(odd) ._123:after, ._abc:nth-child(odd):after 
+{ color: var(--darkColor) }
+*/
+
+/* Extra Dynamic Classes */
+.path:before {
+	content: '\2B24';			/* • ● ⚫ ⬤ */
+	position: relative;
+	top: -.18em;
+	font-size: .75em;
+	color: #0015;
+}
+td.capture { background: radial-gradient(white, #f88) !important }
+.trail { background: radial-gradient(white, #ffa 70%) !important }
+td.castle { background: radial-gradient(white, #fbf) !important }
+
+td:nth-child(8) {
+/*	animation: err .12s alternate ease-in-out 6;*/
+}
+
+.king-of-hill.file-d.rank-5 { transform: translate(-.09em, -.09em) scale(1.11) }
+.king-of-hill.file-d.rank-4 { transform: translate(-.09em, .09em) scale(1.11) }
+.king-of-hill.file-e.rank-5 { transform: translate(.09em, -.09em) scale(1.11) }
+.king-of-hill.file-e.rank-4 { transform: translate(.09em, .09em) scale(1.11) }
+.king-of-hill.file-d.rank-5, .file-e.rank-5, .file-d.rank-4, .file-e.rank-4 {
+/*	background: green !important;*/
+/*	border: .05em solid #0F0;*/
+/*	transform: scale(1);*/
+}
+
+@keyframes err {
+	from {transform: rotate(20deg);}
+	to {transform: rotate(-20deg);}
+}

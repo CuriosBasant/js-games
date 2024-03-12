@@ -1,0 +1,291 @@
+/* Created by mitali jadhavrao */
+
+        body{
+            background-color: #e6ffff;
+            font-family: 'Abril Fatface', cursive;
+        }
+        .mini{
+            position: absolute;
+            top:38%;
+            left:35%;
+            height:280px;
+            width:120px;
+            background-color: #ffed41;
+            border-radius:60px;
+        }
+        .eyel{
+            position: relative;
+            background-color: #fff;
+            height: 40px;
+            width:40px;
+            border-radius: 50%;
+            border:6px solid #999999;
+            top:42px;
+            left:8px;
+            
+        }
+        .eyer{
+            position: relative;
+            background-color: #ffffff;
+            height: 41px;
+            width:41px;
+            border-radius: 50%;
+            border:6px solid #999999;
+            left:58px;
+            bottom: 10px;
+            
+        }
+        .eyeball{
+            position:relative;
+            top:15px;
+            left:14px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: #000000;
+        }
+        .beltl{
+            position: relative;
+            height:10px;
+            width:10px;
+            background-color: #000000;
+            right:15.5px;
+        }
+        .beltr{
+            position: relative;
+            height:10px;
+            width:10px;
+            background-color: #000000;
+            left:46.5px;
+        }
+        .dress{
+            width: 120px;
+            height: 60px; 
+            background-color: #2b5b89;
+            top:41%;
+             border-radius: 0 0 90px 90px;
+             position: relative;
+            }
+        .upper{
+            width:80px;
+            height:90px;
+            background-color:#2b5b89;
+            position: relative;
+            bottom: 70px;
+            left:22px;
+        }
+        .bl{
+            width:30px;
+            height: 12px;
+            transform: skewY(30deg);
+            background-color:#2b5b89;
+            position: relative;
+            right:22px;
+            bottom:8px;
+
+        }
+        .br{
+            width:30px;
+            height: 12px;
+            transform: skewY(-30deg);
+            background-color:#2b5b89;
+            position: relative;
+            left:69px;
+            bottom:15px;
+
+        }
+        .button1{
+            background-color: #000000;
+            width:12px;
+            height: 12px;
+            border-radius:50%;
+            position: relative;
+            transform: skewY(-30deg);
+            top:7px;
+            left:30px;
+        }
+        .button2{
+            background-color: #000000;
+            width:12px;
+            height: 12px;
+            border-radius:60%;
+            position: relative;
+            transform: skewY(30deg);
+            top:4px;
+            right:8px;
+        }
+        .pantl{
+            position: relative;
+            width:20px;
+            height:30px;
+            background-color:#2b5b89;
+            top:100px;
+            left:21px;
+        }
+        .pantr{
+            position: relative;
+            width:20px;
+            height:30px;
+            background-color:#2b5b89;
+            top:70px;
+            left:78px;
+        }
+        .shoe{
+            position: relative;
+            width:32px;
+            height: 18px;
+            border-radius: 15px;
+            background-color: #000000;
+            top:23px;
+            right:5px;
+        }
+        .mouth{
+            position: relative;
+            width:20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #000000;
+            bottom: 120px;
+            left:50px;
+        }
+        .handl{
+            position: relative;
+            width: 20px;
+            height: 90px;
+            background-color: #ffed41;
+            transform: rotate(-115deg);
+            transform-origin:bottom;
+            bottom: 175px;
+            right:  0px;
+            z-index: -1;
+            animation-name:wave;
+            animation-duration: 3s;
+            animation-iteration-count: infinite;
+            -webkit-animation-name:wave;
+           -webkit-animation-duration: 3s;
+            -webkit-animation-iteration-count: infinite;
+        }
+        @keyframes wave{
+            0%{ 
+                -ms-transform: rotate(-115deg); 
+                -webkit-transform: rotate(-115deg);
+                transform: rotate(-115deg);
+            }
+            50%{
+                -ms-transform: rotate(-65deg); 
+                -webkit-transform: rotate(-65deg);
+                transform: rotate(-65deg);
+            }
+            100%{
+                -ms-transform: rotate(-115deg); 
+                -webkit-transform: rotate(-115deg);
+                transform: rotate(-115deg);
+            }
+        }
+        .handr{
+            position: relative;
+            width: 20px;
+            height: 70px;
+            background-color: #ffed41;
+            transform: rotate(150deg);
+            bottom: 180px;
+            left: 120px;
+        }
+        .glove{
+            width: 23px;
+            height: 23px;
+            border-radius: 8px;
+            position: relative;
+            background-color: #000000;
+            right:1px;
+            bottom:13px;
+        }
+        .thumb{
+            width:7px;
+            height: 7px;
+            border-radius:5px;
+            background-color:#000000;
+            position: relative;
+            top:15px;
+            left:20.5px;
+
+
+        }
+        .hello{
+            position:absolute;
+            top:20%;
+            left:35%;
+            font-size:35px;
+            color:#2b5b89;
+            
+            
+        }
+        @keyframes appear{
+            0%{
+                transform: translateY(0px);
+            }
+            50%{
+                transform: translateY(-10px);
+            }
+            100%{
+                transform: translateY(0px);
+            }
+        }
+        .h{ 
+            animation-delay: 0s;
+            animation-name:appear;
+            animation-iteration-count: infinite;
+            animation-duration:4s;
+            animation-fill-mode: forwards;
+
+
+        }
+        .e{    
+            animation-fill-mode: forwards;
+            animation-name:appear;
+            animation-iteration-count: infinite;
+            animation-duration: 4s;
+            position: relative;
+            bottom:47px;
+            left:28px;
+            animation-delay: 1s;
+        }
+        .l{
+            animation-name:appear;
+            animation-iteration-count: infinite;
+            animation-duration: 4s;
+            position: relative;
+            bottom:95px;
+            left:52px;
+            animation-delay: 2s;
+            animation-fill-mode: forwards;
+        }
+        .ll{
+            animation-name:appear;
+            animation-fill-mode: forwards;
+            animation-iteration-count: infinite;
+            animation-duration: 4s;
+            position: relative;
+            bottom:143.5px;
+            left:74px;
+            animation-delay: 3s;
+        }
+        .o{ 
+            animation-name:appear;
+            animation-iteration-count: infinite;
+            animation-duration: 4s;
+            animation-fill-mode: forwards;
+            position: relative;
+            bottom:191px;
+            left:94.5px;
+            animation-delay: 4s;
+        }
+        .pocket{
+            position:relative;
+            width: 60px;
+            height: 30px; 
+            background-color: #1f4161;
+            border-radius: 0 0 30px 30px;
+            bottom:210px;
+            left:33px;
+        }

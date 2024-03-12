@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Puzzle Game</title>
+	<style>
+		body {
+			background: grey;
+		}
+		section {
+			display: table;
+			margin: 60px auto;
+		}
+		table {
+			border: 6px solid #333;
+			border-top-width: 50px;
+			padding: 4px;
+			box-shadow: inset 0 0 4px 3px;
+			background: #555;
+		}
+		span {
+			position: relative;
+			top: 35px; left: 10px;
+			color: white;
+		}
+		td {
+			border: 1px solid #222;
+			border-radius: 5px;
+			padding: 12px 0;
+			width: 56px;
+			background: linear-gradient(#222, #333, #666);
+			text-align: center;
+			font: 28px 'Franklin Gothic Heavy';
+			color: white;
+		}
+		td:hover {
+			cursor: pointer;
+		}
+		div {
+			display: flex;
+		}
+		button {
+			margin: 5px 0;
+			padding: 10px;
+			width: 100px;
+			font-size: 20px;
+			font-weight: bold;
+			flex: 1;
+		}
+	</style>
+</head>
+<body>
+	<section>
+		<span>Moves: 0</span>
+		<table></table>
+		<div>
+			<button>SHUFFLE</button>
+		</div>
+	</section>
+</body>
+<script>
+	document.querySelectorAll('button')[0].onclick = shuffle;
+	for (var i = 0, j; i < 4; i++) { j = 4;
+		document.querySelectorAll('table')[0].appendChild(document.createElement('tr'));
+		while (j-- > 0)
+			document.querySelectorAll('tr')[i].appendChild(document.createElement('td'));
+	}
+	var box = document.querySelectorAll('td'), move = 0, p = 15;
+	for (var i = 0; i < box.length;) {
+		box[i].addEventListener('click', clicked(i));
+		box[i].innerHTML = ++i;
+	}
+	function clicked(k) { return function() {
+		document.querySelectorAll('span')[0].innerHTML = 'Moves: ' + ++move;
+		play(k);
+		if (box[15].style.visibility == 'hidden') setTimeout(check(box), 1000);
+	};	}
+	function play(k) {
+		var gap = [-4, -1, 1, 4];
+		if (k < 4) gap[0] = 0;
+		if (k % 4 == 0) gap[1] = 0;
+		if (k % 4 == 3) gap[2] = 0;
+		for (var i = 0; i < 4; i++)
+			if (box[k + gap[i]].style.visibility == 'hidden') {
+				box[k + gap[i]].innerHTML = box[k].innerHTML;
+				box[k + gap[i]].style.visibility = 'visible';
+				box[k].style.visibility = 'hidden';
+				break;
+			}
+	}
+	/*function shuffle() {
+		if (p == 15) box[p].style.visibility = 'hidden';		
+		move = 0; //Reinitializing to Zero
+		var d, i = 0;
+		var loop = setInterval(function() {
+			d = Math.floor(Math.random() * 4);
+			if (p < 4 && d == 0) d += 1;
+			if (p % 4 == 3 && d == 1) d += 2;
+			if (p > 11 && d == 2) d -= 1;
+			if (p % 4 == 0 && d == 3) d -= 2;
+			switch (d) {
+				case 0: p -= 4;	break;
+				case 1: p++;		break;
+				case 2: p += 4;	break;
+				case 3: p--;		break;
+			}
+			if (p >= 0 && p < 16) play(p); else alert("oh yeah!");
+			if (i++ > 80) clearInterval(loop);
+		}, 120);
+	}*/
+	function shuffle() {
+		if (p == 15) box[p].style.visibility = 'hidden';		
+		var H = Math.floor(Math.random() * 2), X, q, i;
+		move = q = i = 0;
+		var loop = setInterval(function() {
+			if (H == 1 && p < 4) p += 4; else q++;
+			if (H == 1 && p > 11) p -= 4; else q++;
+			if (H == 0 && p % 4 == 3) p--; else q++;
+			if (H == 0 && p % 4 == 0) p++; else q++;
+			if (q == 4) {
+				X = Math.floor(Math.random() * 2);
+				if (H == 0 && X == 0) p--;
+				if (H == 0 && X == 1) p++;
+				if (H == 1 && X == 0) p -= 4;
+				if (H == 1 && X == 1) p += 4;
+			}
+			H = H ? 0 : 1; q = 0;
+			if (p >= 0 && p < 16) play(p); else alert("oh yeah!");
+			if (++i > 20) clearInterval(loop);
+		}, 100);
+	}
+	function check(arr) {
+		var i = 0;
+		while (i < arr.length - 1)
+			if (arr[i].innerHTML == ++i) continue; else break;
+		if (i == arr.length - 1) {
+			box[15].style.visibility = 'visible';
+			box[15].innerHTML = 16;
+			alert("Congratulations!\nYou Completed the Puzzle in " + move + " Moves.");
+		}
+	}
+</script>
+</html>

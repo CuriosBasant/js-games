@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Real Chess 2</title>
+	<style>
+		.invalid {
+			background: #BBB;
+		}
+		#board td {
+			padding: 20px;
+		}
+		.path:before {
+			content: '\2B24';
+			position: relative;
+			top: -.18em;
+			font-size: .8em;
+			color: #0015;
+		}
+	</style>
+</head>
+
+<body>
+	<table id="board"></table>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+	
+const ROW = 12, COL = 10;
+let pieceArray = [], sqr;
+
+function clicked () {
+	const sqrIndex = sqr.index( this );
+	//		pieceArray[sqrIndex].showPath();
+	Piece.showPath( pieceArray[sqrIndex] );
+	clg(pieceArray[sqrIndex]);
+}
+
+class Piece {
+	isSelected = false;
+	constructor( index, pieceCode ) {
+		sqr.eq( index ).html( pieceCode );
+
+	}
+
+	static showPath( thisPiece ) {
+		thisPiece.isSelected = !thisPiece.isSelected;
+		sqr.eq( thisPiece.index + COL * (thisPiece.isWhite * 2 - 1) ).toggleClass('path');
+	}
+}
+
+class Pawn extends Piece {
+	constructor( index, pieceColor ) {	// pieceColor = 'dark' | 'light'
+		super( index, (pieceColor == 'light' ? '&#9817' : '&#9823') );
+
+		this.index = index;
+		this.isWhite = pieceColor == 'light';
+
+	}
+
+}
+
+function clg() {
+	console.log(...arguments);
+}
+	
+$(document).ready( () => {
+	$('#board').html( `<tr>${'<td></td>'.repeat(10)}</tr>`.repeat(12) );
+	$('#board tr:nth-child(-n+2) td, #board tr:nth-last-child(-n+2) td, #board tr td:first-child, #board tr td:last-child').addClass('invalid');
+	$('#board td').not('.invalid').click(clicked);
+	sqr = $('#board td');
+	
+	for (let i = 21; i < 25; i++) {
+		pieceArray[i] = new Pawn(i, ['light', 'dark'][+(Math.random() < 0.5)]);
+	}
+});
+	
+</script>
+
+</html>

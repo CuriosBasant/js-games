@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Puzzle</title>
+	<style>
+		table {
+			border-collapse: collapse;
+			margin: auto;
+		}
+		td {
+			border: 1px solid;
+			padding: 0;
+			height: 70px;
+			width: 70px;
+			background: url('grid/flower.jpg');
+		}
+
+	</style>
+</head>
+<body>
+	<button id='shuffle'>⌘</button>
+	<table></table>
+</body>
+<script>
+	var row = 5, col = 5,
+		 bool = true,
+		 btn = document.getElementById('shuffle');
+	createG(row);
+	btn.onclick = function() {
+		bool ? shuffle() : shuffle.stop();
+		bool = !bool;
+	};
+	function createG(mn) {
+		var tbl = document.querySelectorAll('table')[0];
+		tbl.innerHTML = '';
+		for (var i = 0; i < mn; i++) {
+			tbl.appendChild(document.createElement('tr'));
+			for (var j = 0; j < mn; j++)
+				document.querySelectorAll('tr')[i].appendChild(document.createElement('td')).style.backgroundPosition = j*-70 + 'px ' + i*-70 + 'px';
+		}
+		box = document.querySelectorAll('td');
+		p = nth = box.length - 1;
+		for (var i = 0; i <= nth;) {
+			box[i].onclick = clicked(i);
+			box[i].innerHTML = ++i;
+		}
+	}
+	function clicked(i) { return function() {
+		//document.querySelectorAll('span')[0].innerHTML = 'Moves: ' + ++move;
+		play(i);
+		//if (box[nth].style.visibility == 'hidden') check(box);
+	};	}
+	function play(k) {
+		var gap = [-col, -1, 1, col];
+		if (k < col) gap[0] = 0;
+		if (k % col == 0) gap[1] = 0;
+		if (k % col == col - 1) gap[2] = 0;
+		for (var i = 0; i < 4; i++)
+			if (box[k + gap[i]].style.visibility == 'hidden') {
+				box[k + gap[i]].backgroundPosition = box[k].backgroundPosition;
+				box[k + gap[i]].style.visibility = 'visible';
+				box[k].style.visibility = 'hidden';
+				break;
+			}
+	}
+	function shuffle() {
+		if (p == nth) box[p].style.visibility = 'hidden';
+		//btn.style.background = 'skyblue';
+		var H, X, h, x;
+		move = 0; h = x = true;
+		var loop = setInterval(function() {
+			var q = 0;	// q is a false counter			
+			H = Math.random() > 0.5;
+			if (H) {		//swap vertically
+				if (p < col) p += col; else q++;
+				if (p > (row-1)*col-1) p -= col; else q++;
+			}	else {	//swap horizotally
+				if (p % col == 0) p++; else q++;
+				if (p % col == col - 1) p--; else q++;
+			}
+			if (q == 2) { // if the gap is not at the sides
+				if (H == h) X = x;
+				else X = Math.random() > 0.5;
+				//X = (H == h) ? x : Math.random() > 0.5;
+				if (!H) p += (X ? 1 : -1);
+				else p += (X ? col : -col);
+				h = H; x = X;
+			}
+			if (p >= 0 && p < row * col) play(p); else alert("oh yeah!");
+			function stop() {
+				//btn.style.background = 'white';
+				clearInterval(loop);
+			}	shuffle.stop = stop;
+		}, 200);
+	}
+</script>
+</html>

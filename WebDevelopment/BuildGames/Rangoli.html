@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Can't you draw a sketch?</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		body {
+			/margin: 32px 0;
+			/text-align: center;
+			user-select: none;
+		}
+		#myCanvas {
+			margin: 15px auto;
+			background: #fff;
+			border: 1px solid;
+			border-radius: 50%;
+			cursor: url('data:image/x-icon;base64,AAACAAEAICAQAAAAAADoAgAAFgAAACgAAAAgAAAAQAAAAAEABAAAAAAAAAIAAAAAAAAAAAAAEAAAAAAAAAAAAAAAhYWFAPqv6ADgm4sASkpKAJ/l7QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIAAAAAAAAAAAAAAAAAAAEiIAAAAAAAAAAAAAAAAAAxEiIAAAAAAAAAAAAAAAADMxEgAAAAAAAAAAAAAAAAMzMxAAAAAAAAAAAAAAAAAzMzMAAAAAAAAAAAAAAAADMzMwAAAAAAAAAAAAAAAAMzMzAAAAAAAAAAAAAAAAAzMzMAAAAAAAAAAAAAAAADMzMwAAAAAAAAAAAAAAAABTMzAAAAAAAAAAAAAAAAAFVTMAAAAAAAAAAAAAAAAABFVQAAAAAAAAAAAAAAAAAARAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///////////////////////////////////////////////////////////////////////////////////////P////h////wP///4H///8D///+B////A////gf///wP///4H///+D////B////w////8///////////////w=='), auto;
+		}
+		#cnt {
+			
+		}
+		label {
+			display: inline-table;
+			width: 90px;
+			margin-left: 30px;
+		}
+	</style>
+</head>
+<body>
+	<div id="cnt">
+		<label for="divider">Segments</label>
+		<input type="range" id="divider" min="2" max="40" step="2" value="12" title="Number Of Divider">
+		<label for="size">Brush Size</label>
+		<input type="range" id="size" min="1" max="10" value="6" title="Stroke Size"> <br>
+		<label for="color">Brush Color</label>
+		<input type="color" id="color" title="Stroke Color">
+		<label for="bgcolor">Background</label>
+		<input type="color" id="bgcolor" value="#ffffff" title="Background Color">
+		<input type="button" id="clear" value="Clear" title="Clear Canvas">
+	</div>
+	<canvas id="myCanvas"></canvas>
+</body>
+<script>
+	var c = document.getElementById("myCanvas"),
+		 w = window.innerWidth * .9,
+		 h = window.innerHeight * .88;
+	c.height = h;
+	c.width = w;
+	
+	var ctx = c.getContext("2d"),
+		 strokeColor = undefined, strokeWidth = 6,
+		 totalDivider = 12,
+		 dividerAngle = 2*Math.PI/totalDivider,
+		 rootX = w/2, rootY = h/2,
+		 draw = false;
+	
+	ctx.lineJoin = "round";
+	ctx.lineCap = "round";
+	ctx.shadowColor = "rgb(0,0,255)";
+	ctx.shadowBlur = 1;
+	
+/* ---------- Input Handler Block ---------- */
+	document.querySelector("#divider").addEventListener("input",function(){
+		totalDivider = this.value;
+		dividerAngle = 2*Math.PI/totalDivider;
+	});
+	document.querySelector("#size").addEventListener("input",function(){
+		strokeWidth = this.value;
+	});
+	document.querySelector("#color").addEventListener("input",function(){
+		strokeColor = this.value;
+	});
+	document.querySelector("#bgcolor").addEventListener("input",function(){
+		c.style.background = this.value;
+	});
+	document.querySelector("#clear").addEventListener("click",function(){
+		ctx.clearRect(0, 0, w, h);
+	});
+	
+/* ---------- Touch Handler Block ---------- 
+	c.addEventListener("touchstart", touchStartHandler);
+	c.addEventListener("touchmove", touchMoveHandler);
+	c.addEventListener("touchend", touchEndHandler);
+	
+	function touchStartHandler(e){
+		e.preventDefault();
+		var touchObject = e.changedTouches[0],
+			 x = parseInt(touchObject.clientX),
+			 y = h - parseInt(touchObject.clientY);
+		drawStart();
+	}
+	function touchMoveHandler(e){
+		e.preventDefault();
+		var touchObject = e.changedTouches[0],
+			 x = parseInt(touchObject.clientX),
+			 y = h - parseInt(touchObject.clientY);
+		drawMove(x, y);
+	}
+	function touchEndHandler(){
+		drawEnd();
+	}
+	
+/* ---------- Mouse Handler Block ---------- */
+	c.addEventListener("mousedown", mouseDownHandler);
+	c.addEventListener("mousemove", mouseMoveHandler);
+	c.addEventListener("mouseup", mouseUpHandler);
+
+	function mouseDownHandler(e){
+		e.preventDefault();
+		var x = parseInt(e.clientX),
+			 y = h - parseInt(e.clientY);
+		drawStart();
+	}
+	function mouseMoveHandler(e){
+		e.preventDefault();
+		var x = parseInt(e.clientX),
+			 y = h - parseInt(e.clientY);
+		drawMove(x-5,y+76);
+	}
+	function mouseUpHandler(){
+		drawEnd();
+	}
+	
+/* ---------- Draw Section ---------- */
+	function drawStart(){
+		draw = true;
+		if(!strokeColor)
+			ctx.strokeStyle = "rgb(" + Math.floor(Math.random()*256) + "," + Math.floor(Math.random()*256) + "," + Math.floor(Math.random()*256) + ")";
+		else
+			ctx.strokeStyle = ctx.shadowColor = strokeColor;
+		ctx.lineWidth = strokeWidth;
+	}
+	function drawMove(x,y){
+		if(draw){
+			var r = Math.sqrt(Math.pow(rootX - x, 2) + Math.pow(rootY - y, 2)),
+				 t1 = getAngle(x, y) % dividerAngle,
+				 t2 = getAngle(x, h - y) % dividerAngle;
+			for(var n = 0; n < totalDivider; n++){
+				drawOthers(x,y,r,t1,n);
+				drawOthers(x,y,r,t2,n);
+			}
+		}
+	}
+	function drawEnd(){ draw = false; }
+	function getAngle(x,y){
+		return Math.atan((y - rootY)/(rootX - x));
+	}
+	function drawOthers(x,y,r,t,n){
+		var thita = n * dividerAngle + t;
+		var pt = [rootX - r * Math.cos(thita), rootY - r * Math.sin(thita)];
+		ctx.beginPath();
+		ctx.moveTo(pt[0], pt[1]);
+		ctx.lineTo(pt[0], pt[1]);
+		ctx.stroke();
+		ctx.closePath();
+	}
+</script>
+</html>

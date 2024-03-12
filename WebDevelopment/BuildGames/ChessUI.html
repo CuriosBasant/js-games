@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		body {
+			counter-reset: num 9 abc;
+			background: #666;
+		}
+		#board {
+			position: relative;
+			border: 25px solid;
+			margin: 50px auto;
+			border-collapse: collapse;
+		}
+		td {
+			height: 60px;
+			width: 60px; top: 0;
+			box-shadow: inset 0 0 5px 2px rgba(0,0,0,.5);
+			background: lightyellow;
+		}
+		/* Creating Checkboard */
+		tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) { background: red }
+		
+		/* Numbering */
+		td:nth-child(1):after {
+			position: absolute;
+			color: white;
+			vertical-align: middle;
+			transform: translate(-18px, -30px);			
+			counter-increment: num -1;
+			content: counter(num);
+		}
+		tr:nth-child(8) td:before {
+			position: absolute;
+			color: white;
+			transform: translate(30px, 55px);
+			counter-increment: abc;
+			content: counter(abc, lower-alpha);
+		}
+		img {
+			display: block;
+			margin: auto;
+			height: 75%;
+		}
+	</style>
+</head>
+<body>
+	<table id='board'>
+		<tr><td/><td/><td/><td/><td/><td/><td/><td/></tr>
+		<tr><td/><td/><td/><td/><td/><td/><td/><td/></tr>
+		<tr><td/><td/><td/><td/><td/><td/><td/><td/></tr>
+		<tr><td/><td/><td/><td/><td/><td/><td/><td/></tr>
+		<tr><td/><td/><td/><td/><td/><td/><td/><td/></tr>
+		<tr><td/><td/><td/><td/><td/><td/><td/><td/></tr>
+		<tr><td/><td/><td/><td/><td/><td/><td/><td/></tr>
+		<tr><td/><td/><td/><td/><td/><td/><td/><td/></tr>
+	</table>
+</body>
+	
+<script>
+	var piece = new Array(4), sqr = [], row = document.getElementsByTagName('tr');
+	for (var i = 0; i < row.length; i++) {
+		sqr.push(row[i].getElementsByTagName('td'));
+	}
+	for (var x = 0; x < 4; x++) {
+		piece[x] = new Array(8);
+	}
+	for (var i = 0; i < 4; i++) {
+		for (var j = 0; j < 8; j++) {
+			piece[i][j] = document.createElement("img");
+		}
+	}
+	
+	/* Importing Pieces */
+	piece[0][0].src = piece[0][7].src = "img/ChessPieces/100p/B_Rook.png";
+	piece[0][1].src = piece[0][6].src = "img/ChessPieces/100p/B_Knight.png";
+	piece[0][2].src = piece[0][5].src = "img/ChessPieces/100p/B_Bishop.png";
+	piece[0][3].src = "img/ChessPieces/100p/B_Queen.png";
+	piece[0][4].src = "img/ChessPieces/100p/B_King.png";
+	for (var p = 0; p < 8; p++) {
+		piece[1][p].src = "img/ChessPieces/100p/B_Pawn.png";
+		piece[2][p].src = "img/ChessPieces/100p/W_Pawn.png";
+	}
+	piece[3][0].src = piece[3][7].src = "img/ChessPieces/100p/W_Rook.png";
+	piece[3][1].src = piece[3][6].src = "img/ChessPieces/100p/W_Knight.png";
+	piece[3][2].src = piece[3][5].src = "img/ChessPieces/100p/W_Bishop.png";
+	piece[3][3].src = "img/ChessPieces/100p/W_Queen.png";
+	piece[3][4].src = "img/ChessPieces/100p/W_King.png";
+	
+	/* Setting Default Position for all Pieces */
+	for (var i = 0, k = 0; i < 4; i++, k++) {
+		if (i == 2) k = 6;
+		for (var j = 0; j < 8; j++) {
+			sqr[k][j].appendChild(piece[i][j]);
+		}
+	}
+	
+	window.onload = function () {
+		document.querySelector('table').onclick = function(ev) {
+			var row = ev.target.parentElement.rowIndex;
+			var cell = ev.target.cellIndex;
+			alert('Row = ' + row + ', Column = ' + cell);
+			//sqr[row][cell].appendChild(piece[3][4]);
+		}
+	}
+	document.getElementsByTagName('td')[21].style.backgroundColor = green;
+		
+</script>
+</html>
+
+<!--
+<div id="x"></div>
+JS code:
+
+var img = document.createElement("img");
+ 
+img.src = "image.png";
+var src = document.getElementById("x");
+ 
+src.appendChild(img); -->

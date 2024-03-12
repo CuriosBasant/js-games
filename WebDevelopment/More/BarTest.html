@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MyBarIsMyBarNoneOfYourBar!</title>
+	<style>
+		html{
+			--glass: rgba(230, 230, 230, 0.4);
+			--color:  rgba(0, 0, 255, 0.43);
+		}
+		body{ background: #ccc }
+		#bar{
+			perspective: 800px;
+			perspective-origin: top;
+    		transform-style: preserve-3d;
+		}
+		.side{
+			position: absolute;
+			left:110px;
+			font-size: 3em;
+			background: var(--glass);
+			margin: 150px auto;
+			height: 2em; width: 8em; /* This will change size of Bar */
+		}
+		
+		.top{
+			transform: rotateX(90deg) translateZ(1em);
+		}
+		.bottom{
+			transform: rotateX(-90deg) translateZ(1em);
+			box-shadow: 0 .1em 0.6em rgba(0,0,0,.3), .6em -0.5em 3em rgba(0,0,0,.3), 1em -0.2em 8em #DDD;
+		}
+		.back{
+			transform: translateZ(-1em);
+		}
+		.front{
+			transform: translateZ(1em);
+		}
+		.left{
+			transform: rotateY(90deg) translateZ(-1em);
+			width: 2em;
+		}
+		.right{
+			transform: rotateY(90deg) translateZ(7em);
+			box-shadow: inset 0 0 2em .5em rgba(220, 220, 220, 0.3);
+			width: 2em;
+		
+		}
+		.grow{
+			height: 2em;
+			width: 6em;   /* This Fills the Bar */
+			background: var(--color);
+		}
+		.bottom .grow{
+			box-shadow: -0.5em -1em 5em 0.5em var(--color);
+		}
+		.front .grow{
+			box-shadow: -0.5em -0.5em 3em .5em var(--color)
+		}
+		.left .grow{
+			box-shadow: inset 0 0 2em .05em var(--color)
+		}
+		ul{ position: relative; top:22em; left:4em; width: 400px }
+		li{
+			background: #353535;
+			font: bold 1.2em cambria;
+			list-style-type: none;
+			float:left; color: white;
+			padding: 10px 20px;
+			width: 12.5%;
+			text-align: center;
+			border: 1px solid;
+		}
+		
+		li:hover{
+			cursor: pointer;
+			background: var(--color);
+		}
+		#slider{
+			position: relative;
+			top:30em;
+			left: 9em;
+			width: 30em;
+			height: 10px;
+			cursor: pointer;
+		}
+		#demo { position: absolute; right: 0; font-size: 20px; }
+		#slider:hover { opacity: 1 }
+		input:checked[type=checkbox] body {
+			background: #111;
+		}
+	</style>
+</head>
+	
+	
+<body>
+	<div id="bar">
+		<div class="top side"><div class="grow"></div></div>
+		<div class="bottom side"><div class="grow"></div></div>
+		<div class="back side"><div class="grow"></div></div>
+		<div class="front side"><p id="demo"></p><div class="grow"></div></div>
+		<div class="left side"><div class="grow" style="width: 2em"></div></div>
+		<div class="right side"></div>
+	</div>
+	
+	<ul>
+		<li onclick = "switchColor('rgba(210, 210, 210, 0.5)', 0)">None</li>
+		<li onclick = "switchColor('rgba(255, 0, 0, 0.5)',1)">Red</li>
+		<li onclick = "switchColor('rgba(255, 0, 204, 0.45)',2)">Pink</li>
+		<li onclick = "switchColor('rgba(0, 30, 255, 0.5)',3)">Blue</li>
+		<li onclick = "switchColor('rgba(0, 128, 255, 0.55)',4)">Cyan</li>
+		<li onclick = "switchColor('rgba(0, 255, 0, 0.4)',5)">Green</li>
+		<li onclick = "switchColor('rgba(255, 255, 0, 0.4)',6)">Yellow</li>
+		<li onclick = "switchColor('rgba(255, 165, 0, 0.5)',7)">Orange</li>
+	</ul>
+	<input type="range" min="0" max="80" value="60" id="slider">
+	<input type="checkbox" onclick="mode()" id="clr">
+	<label for="clr">Dark Mode</label>
+</body>
+<script>
+	var slider = document.getElementById("slider");
+	var val = document.getElementById("demo");
+	var glow = document.getElementsByClassName("grow");
+	
+	val.innerHTML = slider.value*10/8 + '%';
+
+	slider.oninput = function() {
+		val.innerHTML = Math.round(this.value*10/8) + '%';
+		for( var i = 0; i < glow.length; i++) {
+			if(i == 4) continue;
+			glow[i].style.width = this.value/10 + 'em';
+		}
+	}
+	function switchColor(color, i) {
+		document.getElementsByTagName('li')[i].style.background = color;
+		x = document.getElementsByTagName('html')[0];
+		x.style.setProperty('--color', color);
+		//x.style.cssText = '--color:' + color;
+		//x.setAttribute("style", '--color:' + color);
+	}
+	function mode() {
+		var bg_clr = document.getElementsByTagName('body')[0];
+		if(document.getElementById('clr').checked)
+			bg_clr.style.background = '#333';
+		else
+			bg_clr.style.background = '#ccc';
+	}
+</script>
+</html>
+

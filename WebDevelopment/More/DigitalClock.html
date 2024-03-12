@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		html { --off: #454545; --on: blue; }
+		body { background: darkgrey }
+		#box {
+			position: relative;
+			height: 200px;
+			width: 600px;
+			top: 200px;	left: 50%;
+			transform: translate(-50%);
+			border: 20px solid;
+			border-radius: 1000px;
+			padding: 60px 0 0 10%;
+			box-shadow: inset 0 0 20px 5px rgba(0,0,0, .5);
+			background: linear-gradient(#333, #666);
+		}
+		#hori, #vert { position: relative }
+		#vert { top: -110px }
+		.hline {
+			height: 40px; 		width: 30px;
+			border: 10px solid;
+			border-color: var(--off) transparent;
+		}
+		.vline {
+			position: relative;
+			top: 5px;		left: -5px;
+			height: 30px; 		width: 40px;
+			border: 10px solid;
+			border-color: transparent var(--off);
+		}
+		li { 
+			position: relative;
+			float: left;
+			display: inline-block;
+			margin: 10px;
+		}
+		.dots {
+			position: relative;
+			height: 40px;
+			top: 40px;
+			margin: -10px;
+			border: 10px solid;
+			border-radius: 50%;
+			border-color: var(--on) transparent;
+			animation: 1s blink linear infinite;
+		}
+		@keyframes blink {
+			50% { border-color: var(--on) transparent }
+			51% { border-color: var(--off) transparent }
+			to { border-color: var(--off) transparent }
+		}
+	</style>
+</head>
+<body>
+	<ul id = 'box'>
+		<!-- Hours -->
+		<li>
+			<div id = 'hori'>
+				<div class = 'hline' style = "border-bottom-width: 5px"></div>
+				<div class = 'hline' style = "border-top-width: 5px"></div>
+			</div>
+			<div id = 'vert'>
+				<div class = 'vline'></div>
+				<div class = 'vline'></div>
+			</div>
+		</li>
+		<li>
+			<div id = 'hori'>
+				<div class = 'hline' style = "border-bottom-width: 5px"></div>
+				<div class = 'hline' style = "border-top-width: 5px"></div>
+			</div>
+			<div id = 'vert'>
+				<div class = 'vline'></div>
+				<div class = 'vline'></div>
+			</div>
+		</li>
+		<li>
+			<div class = 'dots'></div>
+		</li>
+		<!-- Minutes -->
+		<li>
+			<div id = 'hori'>
+				<div class = 'hline' style = "border-bottom-width: 5px"></div>
+				<div class = 'hline' style = "border-top-width: 5px"></div>
+			</div>
+			<div id = 'vert'>
+				<div class = 'vline'></div>
+				<div class = 'vline'></div>
+			</div>
+		</li>
+		<li>
+			<div id = 'hori'>
+				<div class = 'hline' style = "border-bottom-width: 5px"></div>
+				<div class = 'hline' style = "border-top-width: 5px"></div>
+			</div>
+			<div id = 'vert'>
+				<div class = 'vline'></div>
+				<div class = 'vline'></div>
+			</div>
+		</li>
+		<li>
+			<div class = 'dots'></div>
+		</li>
+		<!-- Seconds -->
+		<li>
+			<div id = 'hori'>
+				<div class = 'hline' style = "border-bottom-width: 5px"></div>
+				<div class = 'hline' style = "border-top-width: 5px"></div>
+			</div>
+			<div id = 'vert'>
+				<div class = 'vline'></div>
+				<div class = 'vline'></div>
+			</div>
+		</li>
+		<li>
+			<div id = 'hori'>
+				<div class = 'hline' style = "border-bottom-width: 5px"></div>
+				<div class = 'hline' style = "border-top-width: 5px"></div>
+			</div>
+			<div id = 'vert'>
+				<div class = 'vline'></div>
+				<div class = 'vline'></div>
+			</div>
+		</li>
+	</ul>
+</body>
+<script>
+
+	let digits = ['1110111', '0010010', '1011101', '1011011', '0111010', '1101011', '1101111', '1010010',  '1111111', '1111011'];
+	setInterval(function() { 
+		var time = new Date(),
+			 hh = time.getHours(), 
+			 mm = time.getMinutes(), 
+			 ss = time.getSeconds(),
+			 on = 'blue',
+			 nums = [hh/10|0, hh%10, mm/10|0, mm%10, ss/10|0, ss%10],
+			 hori = document.getElementsByClassName('hline'), 
+			 vert = document.getElementsByClassName('vline');
+
+		for (var i = 0; i < 6; i++) { //Iterating Panels
+			for (var j = 0; j < 7; j++) {	//Iterating Segment
+				//hori[j].style.borderTopColor = hori[j].style.borderBottomColor = 
+				vert[j].style.borderLeftColor = vert[j].style.borderRightColor = "white";
+				if (digits[nums[i]][j] == '1') {
+					switch(j) {
+						case 0: hori[i*2].style.borderTopColor = on; break;
+						case 1: vert[i*2].style.borderLeftColor = on; break;
+						case 2: vert[i*2].style.borderRightColor = on; break;
+						case 3: hori[i*2].style.borderBottomColor = on;
+								  hori[i*2+1].style.borderTopColor = on; break;
+						case 4: vert[i*2+1].style.borderLeftColor = on; break;
+						case 5: vert[i*2+1].style.borderRightColor = on; break;
+						case 6: hori[i*2+1].style.borderBottomColor = on; break;
+					}
+				}
+			}
+		}
+	}, 1000);
+	
+
+</script>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		html { --glass: rgba(220, 220, 220, 0.5);
+			--go: yes 1s linear infinite;
+		}
+		body {
+			margin: 0;		padding: 0;
+			background: #444
+		}
+		#diamond {
+			position: absolute;
+			top: 40%;	left: 40%;
+			font-size: 3em;
+			transform-style: preserve-3d;
+			transform-origin: 1em;
+			transform: rotateX(20deg);
+			/animation: spin 15s linear infinite;
+		}
+		.pavilion {
+			position: absolute;
+			border-top: 4em solid var(--glass);
+			border-left: 1em solid transparent;
+			border-right: 1em solid transparent;
+			outline: none;
+		}
+		.N { transform: rotateY(0deg) translateZ(1em) rotateX(-45deg) }
+		.S { transform: rotateY(180deg) translateZ(1em) rotateX(-45deg) }
+		.W { transform: rotateY(-90deg) translateZ(1em) rotateX(-45deg) }
+		.E { transform: rotateY(90deg) translateZ(1em) rotateX(-45deg) }
+		.NW{ transform: rotateY(-135deg) translateZ(1em) rotateX(-45deg) }
+		.NE{ transform: rotateY(135deg) translateZ(1em) rotateX(-45deg) }
+		.SW{ transform: rotateY(-45deg) translateZ(1em) rotateX(-45deg) }
+		.SE{ transform: rotateY(45deg) translateZ(1em) rotateX(-45deg) }
+		
+		.crown {
+			position: absolute;
+			top: 0em;
+			border-bottom: 1em solid red;
+			border-left: 1em solid transparent;
+			border-right: 1em solid transparent;
+		}
+
+		.Na { position: absolute; /animation: var(--go) }
+		.Sa { position: absolute; /animation: var(--go) }
+		.Wa { position: absolute; /animation: var(--go) }
+		.Ea { position: absolute; /animation: var(--go) }
+		.NWa{ position: absolute; /animation: var(--go) }
+		.NEa{ position: absolute; /animation: var(--go) }
+		.SWa{ position: absolute; /animation: var(--go) }
+		.SEa{ position: absolute; /animation: var(--go) }
+		
+		.Na { transform: rotateX(60deg) translateZ(-6em) translateY(1em) translateX(-1em)  ; }
+		.Sa { transform: rotateX(60deg) translateZ(-6em) translateY(1em) translateX(-1em)  ; }
+		.Wa { transform: rotateX(60deg) translateZ(-6em) translateY(1em) translateX(-1em)  ; }
+		.Ea { transform: rotateX(60deg) translateZ(-6em) translateY(1em) translateX(-1em)  ; }
+		.NWa{ transform: rotateX(60deg) translateZ(-6em) translateY(1em) translateX(-1em)  ; }
+		.NEa{ transform: rotateX(60deg) translateZ(-6em) translateY(1em) translateX(-1em)  ; }
+		.SWa{ transform: rotateX(60deg) translateZ(-6em) translateY(1em) translateX(-1em)  ; }
+		.SEa{ transform: rotateX(60deg) translateZ(-6em) translateY(1em) translateX(-1em)  ; }
+		@keyframes yes {
+			from{ transform: rotateX(0deg) }
+			to{ transform: rotateX(360deg) }
+		}
+		@keyframes spin {
+			from{ transform: rotateY(0deg) }
+			to{ transform: rotateY(360deg) }
+		}
+		
+	</style>
+</head>
+<body>
+	<div id='diamond'>
+		<div class='pavilion N'> <div class='crown Sa'></div> </div>
+		<div class='pavilion S'> <div class='crown Na'></div> </div>
+		<div class='pavilion W'> <div class='crown Wa'></div> </div>
+		<div class='pavilion E'> <div class='crown Ea'></div> </div>
+		<div class='pavilion NW'> <div class='crown NWa'></div> </div>
+		<div class='pavilion NE'> <div class='crown NEa'></div> </div>
+		<div class='pavilion SW'> <div class='crown SWa'></div> </div>
+		<div class='pavilion SE'> <div class='crown SEa'></div> </div>
+		
+		<!--div class='crown '></div>
+		<div class='crown '></div>
+		<div class='crown '></div>
+		<div class='crown '></div>
+		<div class='crown '></div>
+		<div class='crown '></div>
+		<div class='crown '></div>
+		<div class='crown '></div>
+		<div class='crown '></div>
+		<div class='crown '></div-->
+		
+	</div>
+</body>
+</html>

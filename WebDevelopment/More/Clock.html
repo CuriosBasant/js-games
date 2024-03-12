@@ -1,0 +1,99 @@
+  c   d     f   g   a
+C   D   E F   G   A   B
+
+C F d c c C g. a. c C C
+a. a. g. a. a. g. G. F. d. F.
+g a C' g a
+g a C' c' g a
+G a g G F G d F
+
+d F F G G F G G c' c' C' C' a C' C' F' F' d' d' c' c' C' a g a
+
+
+
+
+
+
+
+
+After nine attempts, there was a problem downloading the following file:
+https://download.visualstudio.microsoft.com/download/pr/3e64b1cb-a6a8-4776-a341-9d7c3fc0ad02/f405921af801c3e501665555fe50db56/dotnet-sdk-2.1.202-win-x64.exe
+
+Select Continue to install Visual Studio without downloading this file. This might cause problems with other parts of the installation.
+
+Select Retry to try downloading the file again.
+
+Select Cancel to cancel the Visual Studio install.
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		#clock {
+			position: absolute;
+			/transform-origin:em;
+			transform: rotate(-90deg);
+			top: 30%; 	left: 30%;
+			height: 20em;	width: 20em;
+			border: 1em solid;
+			border-radius: 50%;
+			background: #ddd;
+			/animation: spin 5s linear infinite;
+		}
+		#numbers {
+			position: absolute;
+			transform: rotate(90deg);
+			font: 50px cambria;
+		}
+		#numbers * { position: absolute;	}
+		.hand { 
+			position: absolute;
+			border: 5px solid;
+			border-radius: 50%;
+			left: 50%;
+			margin-top: calc(50% - .3em);
+			transform-origin: 0;			
+		}
+		.hour {
+			width: 5em;
+			animation: spin 4320s linear infinite;
+			
+		}
+		.minute {
+			width: 8em;
+			animation: spin 360s linear infinite;
+		}
+		.second {
+			width: 8em;
+			border-style: dotted;
+			animation: spin 6s linear infinite;
+		}
+		@keyframes spin {
+			from{ transform: rotateZ(0deg) }
+			to{ transform: rotateZ(360deg) }
+		}
+	</style>
+</head>
+<body>
+	<div id="clock">
+		<div id="numbers">
+			<a style="top: -6.5em; left: 2.7em">12</a>
+			<a style="top: -3.8em; left: 5.7em">3</a>
+			<a style="top: -1.1em; left: 2.9em">6</a>
+			<a style="top: -3.8em; left: 0.2em">9</a>
+		</div>
+		<div class="hour hand"></div>
+		<div class="minute hand"></div>
+		<div class="second hand"></div>
+	</div>
+</body>
+</html>

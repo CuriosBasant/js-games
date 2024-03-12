@@ -1,0 +1,12 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+
+#pool-table {
+	display: block;
+	border: 10px solid;
+	margin: .5em auto;
+	background: skyblue;
+/*	box-sizing: border-box; */
+}

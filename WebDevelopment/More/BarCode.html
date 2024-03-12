@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Q-R Code Generator</title>
+	<style>
+		* { outline: none }
+		section {
+			display: table;
+			margin: 30px auto;
+		}
+		
+		input {
+			padding: 8px 12px;
+			width: 350px;
+			box-shadow: inset 0 0 20px #bbb;
+			border: 0 solid;
+			border-right-style: none;
+			border-radius: 10px 0 0 10px;
+		}
+		button {
+			position: relative;
+			padding: 8px 15px;
+			border: 0 solid;
+			border-radius: 0 10px 10px 0;
+			background: #61a8ff;
+		}
+		button:active {
+			left: -1px;
+		}
+		table {
+			border-spacing: 0;
+			margin: 120px auto;
+		}
+		//td:nth-child(odd) { background: black}
+		td {
+			padding: 35px 2px;
+			/border: 1px solid;
+			display: inline;
+		}
+		td:nth-child(1), td:nth-child(3), td:nth-child(47), td:nth-child(49), td:nth-child(93), td:nth-child(95) {
+			padding-bottom: 50px;
+		}
+	</style>
+</head>
+<body>
+	<section>
+		<input type="text" placeholder="Enter Anything Here!" value=917023367365>
+		<button>GO</button>
+	</section>
+	<table></table>
+	<div id="hi"></div>
+</body>
+<script>
+	var par = ['000000','001011','001101','001110','010011','011001','011100','010101','010110','011010'],
+		 num = ['3211','2221','2122','1411','1132','1231','1114','1312','1213','3112'];
+	document.querySelectorAll("button")[0].onclick = function() {
+		var bar = "111", bool = true, k = 0,
+			 inp = document.querySelectorAll("input")[0].value;
+		createG(95);
+		for (var i = 0; i < 12; i++) {
+			if (i == 6) bar += '11111';
+			bar += num[inp[i]];
+		}	bar += '111';
+		//document.getElementById('hi').innerHTML = bar;
+		for (var i = 0; i < bar.length; i++) {		/* bar.length = 59 */
+			for (var j = 0; j < bar[i]; j++) {
+				if (bool) {
+					stp[k].style.background = 'black';
+				}	k++;
+			}
+			bool = !bool;
+		}
+	};
+	function createG(c) {
+		var tbl = document.querySelectorAll('table')[0];
+		tbl.innerHTML = "";
+		tbl.appendChild(document.createElement('tr'));
+		while (c-- > 0)
+			document.querySelectorAll('tr')[0].appendChild(document.createElement('td'));
+		stp = document.querySelectorAll('td');
+	}
+	
+</script>
+</html>

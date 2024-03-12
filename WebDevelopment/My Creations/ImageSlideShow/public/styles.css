@@ -1,0 +1,70 @@
+@font-face {
+  font-family: 'Material Icons';
+  src: url('./font/Material.ttf') format('truetype');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-size: 62.5%;
+  width: 100vw;
+  height: 100vh;
+  background-color: #667;
+}
+
+body .material-icon {
+  all: unset;
+  font-family: 'Material Icons';
+  cursor: pointer;
+}
+
+section img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 30%;
+  transform: translate(-50%, -50%);
+  /* width: 100%; */
+  margin: auto;
+  transition: left 1s ease-in-out, height 1s ease-out, z-index 1s;
+  box-shadow: 0 0 5em #0005;
+}
+
+section img.hidden {
+  /* display: none; */
+  /* z-index: -1; */
+}
+
+section img.left-slide {
+  left: 25%;
+  z-index: 1;
+}
+
+section img.active-slide {
+  height: 60%;
+  z-index: 10;
+}
+
+section img.right-slide {
+  left: 75%;
+  z-index: 1;
+}
+
+.buttons button {
+  position: absolute;
+  font-size: 8em;
+  color: #223;
+  height: 100%;
+}
+.buttons button:hover {
+  background-color: #0002;
+}
+.buttons button:first-child {
+  left: 0;
+}
+.buttons button:last-child {
+  right: 0;
+}

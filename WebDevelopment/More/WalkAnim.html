@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Walking Animation</title>
+    <style>
+		body{
+			 background-color: grey;
+			 text-align: center;
+		}
+		.sky{
+			 height: 200px;
+			 background-color: lightblue;
+		}
+		.road{
+			 border-top: 80x dotted black;
+			 height:10px;
+			 background-color: black;
+			 //background: url(img/cloud.png);
+		}
+
+		#hatman{
+			 background: url("img/capguy-walk.png");
+			 width: 180px;
+			 height: 320px;
+			 animation: move 1.3s steps(8) infinite,
+				  forward 8s linear infinite;
+		}
+
+		@keyframes move{
+			 0%{ background-position: 1472px; }
+			 100%{ background-position: 0px; }
+		}
+
+		@keyframes forward{
+			 0%{ transform: translateX(-180px);}
+			 100%{ transform: translateX(700px);}
+		}
+	</style>
+</head>
+<body>
+    <div class="sky"></div>
+    <div id="hatman"></div>
+    <div class="road"></div>
+</body>
+</html>

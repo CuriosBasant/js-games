@@ -1,0 +1,69 @@
+/* This file is Generated from SASS */
+
+$lightColor : lightyellow;
+$darkColor : #56f2ff;
+$transGrey : rgba(0,0,20,0.6);
+
+* {
+//	outline: none;
+	margin: 0;
+	padding: 0;
+	font-family: 'Segoe UI'
+}
+body {
+	user-select: none;
+	counter-reset: num 9 abc;
+	text-align: center;
+	background: #456;
+	#container {
+		display: inline-flex;
+		flex-direction: column;
+		font-size: 13px;
+		position: relative;
+		padding: 1em;
+		background: rgba(255, 255, 255, 0.3);
+	}
+}
+#board {
+	border-collapse: collapse;
+	transition: .5s;
+
+	td:not(.invalid) {
+		font-size: 2em;
+		height: 1.33em;
+		width: 1.3em;
+		text-align: center;
+		transition: .2s;
+		box-shadow: inset 0 0 .1em .03em rgba(0,0,0,.4);
+		background: $lightColor /*url("square/paper_W.bmp")*/;
+		z-index: -1;
+	}
+	td.invalid {
+		font-size: 0;
+		// background: grey;
+		&:active { cursor: grabbing; }
+		&:first-child, &:last-child { display: none; }
+	}
+	&:hover { cursor: grab }
+
+	#red { color: red }
+	#green { color: green }
+	#blue { color: blue }
+	#black { color: rgba(0,0,0,0.8) }
+
+	/* Creating Checkboard */
+	tr:nth-child(even) td:nth-child(even):not(.invalid),
+	tr:nth-child(odd) td:nth-child(odd):not(.invalid)
+	{ background: $darkColor /*url("square/paper_B.bmp")*/}
+}
+/* Extra Stylings */
+.path:before {
+	content: '\2B24';			/* • ● ⚫ ⬤ */
+	position: relative;
+	top: -.2em;
+	font-size: .7em;
+	color: rgba(0,0,0,0.4);
+}
+td.capture { background: radial-gradient(white, #f88) !important }
+.trail { background: radial-gradient(white, #ffa 70%) !important }
+td.castle { background: radial-gradient(white, #fbf) !important }

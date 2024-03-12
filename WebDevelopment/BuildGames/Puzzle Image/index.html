@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Puzzle Game</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div id="game-arena">
+		<div id="puzzle-board" class="bg-image"></div>
+		<div>
+			<button>Takeback</button>
+			<button class="btn-image-slider" value="-1">Previous</button>
+			<button id="shuffler">Shuffle</button>
+			<button class="btn-image-slider" value="1">Next</button>
+
+		</div>
+		<ul>
+			<li>
+				<label for="cuttings">Puzzle cuttings</label>
+				<input type="range"id="cuttings" min="3" max="8" value="4">
+			</li>
+			<li>
+				<label for="show-border">Include Borders</label>
+				<button id="show-border" class="use-icon">toggle_off</button>
+			</li>
+		</ul>
+	</div>
+
+	<script src="index.js"></script>
+</body>
+</html>

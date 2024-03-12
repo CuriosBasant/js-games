@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Pixel Art Creater</title>
+	<style>
+		body {
+			background: #aafcff;
+		}
+		form {
+			margin: 20px auto;
+			text-align: center;
+		}
+		table {
+			margin: auto;
+			border-collapse: collapse;
+			border: 3px solid;
+		}
+		td {
+			//background: skyblue;
+			border: 1px solid;
+			height: 50px;
+			width: 50px;
+			text-align: center;
+			font-size: 25px;
+			font-family: cambria;
+		}
+		input[type='number'] {
+			width: 40px;
+			text-align: right;
+		}
+		label {
+		/	margin-left: 30px;
+		}
+		progress {
+			width: 70%;
+			height: 20px;
+			//color: blue;
+			background: yellow;
+		}
+		-webkit-progress-value{ background: red;}
+	</style>
+</head>
+<body onload="createGrid()">
+	<form>
+		<label for="row">Rows:</label>
+		<input type="number" value="10" oninput="createGrid()" id='row'>
+		<label for="col">Columns:</label>
+		<input type="number" value="10" oninput="createGrid()" id='col'>
+	</form>
+	<table></table>
+	<img src="sqrNum.jpg" alt="">
+</body>
+<script>
+	function createGrid() {
+		var tbl = document.querySelectorAll('table')[0], pre = 0;
+		tbl.innerHTML = '';
+	/* Create Grid */
+		var r = document.getElementById('row').value,
+			 c = document.getElementById('col').value;
+		r = 12; c = 12;
+		for (i = 0; i < r; i++) { j = c;
+			tbl.appendChild(document.createElement('tr'));
+			while (j-- > 0)
+				document.querySelectorAll('tr')[i].appendChild(document.createElement('td'));
+		}
+	/* Let's Draw */
+		var box = document.querySelectorAll('td');
+		for (i = 0; i < box.length; i++) {
+			if ([0,1,10,11].includes(i % 12) || [0,1,10,11].includes(i / 12 | 0)) box[i].style.background = "grey";
+			box[i].textContent = i;
+			//box[i].onclick = clicked(i);
+		}
+		function clicked(i) { return function() {
+			//alert(box[i].style.backgroundColor);
+			//box[i].style.background = (pre != i ? 'red' : 'skyblue');
+			pre = i;
+		};	}
+	}
+//A = [07C,0FE,1FF,1C7,1C7,1C7,1FF,1FF,1FF,1C7,1C7,1C7,1C7],
+</script>
+</html>
+
